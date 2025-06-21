@@ -1,0 +1,25 @@
+{
+  "name": "beltahbot-md",
+  "version": "1.0.0",
+  "description": "🔥 BeltahBot-MD - WhatsApp AI Bot powered by Beltah × Knight",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "whatsapp-bot",
+    "baileys",
+    "beltah",
+    "termux-bot",
+    "chatgpt",
+    "ai"
+  ],
+  "author": "Ishaq Ibrahim",
+  "license": "MIT",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.6.0",
+    "axios": "^1.7.2",
+    "chalk": "^5.3.0",
+    "figlet": "^1.5.2"
+  }
+}
