@@ -4,20 +4,50 @@
  * Powered by: Beltah x Knight
  */
 
-const { default: makeWASocket, useMultiFileAuthState } = require('@whiskeysockets/baileys');
+const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys');
 const P = require('pino');
-const fs = require('fs');
 
 async function startBeltahBot() {
   const { state, saveCreds } = await useMultiFileAuthState('./session');
+
   const Beltah = makeWASocket({
     auth: state,
     logger: P({ level: 'silent' }),
+    browser: ['BeltahBot', 'Termux', '1.0'],
+    markOnlineOnConnect: true
   });
 
+  // ✅ Save session
   Beltah.ev.on('creds.update', saveCreds);
 
-  // Example: auto-reply
+  // ✅ Show QR manually (fixed for latest Baileys)
+  Beltah.ev.on('connection.update', (update) => {
+    const { connection, qr, lastDisconnect } = update;
+
+    if (qr) {
+      console.log('\n📸 Scan this QR Code to connect WhatsApp:\n');
+      console.log(qr);
+    }
+
+    if (connection === 'open') {
+      console.log('✅ B.E.L.T.A.H Bot is now connected to WhatsApp!');
+    }
+
+    if (connection === 'close') {
+      const shouldReconnect =
+        lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
+
+      console.log('❌ Connection closed. Reconnecting:', shouldReconnect);
+
+      if (shouldReconnect) {
+        startBeltahBot();
+      } else {
+        console.log('🛑 Logged out. Delete session folder and scan again.');
+      }
+    }
+  });
+
+  // ✅ Simple auto-reply example
   Beltah.ev.on('messages.upsert', async ({ messages }) => {
     const msg = messages[0];
     if (!msg.message) return;
