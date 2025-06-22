@@ -1,8 +1,8 @@
-const figlet = require('figlet');
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const config = require('../config');
 const getLang = require('../settings/language');
 const lang = getLang(config.language); // Load language settings
+const fs = require('fs');
 
 const menuCommand = async (sock, msg) => {
   const from = msg.key.remoteJid;
@@ -11,57 +11,52 @@ const menuCommand = async (sock, msg) => {
   await sock.sendPresenceUpdate('composing', from);
   await delay(400);
 
-  // Big B.E.L.T.A.H Banner
-  const bigText = figlet.textSync('B.E.L.T.A.H', {
-    font: 'Standard',
-    horizontalLayout: 'default',
-    verticalLayout: 'default'
-  });
+  // Load updated banner image (make sure it's placed in /media/)
+  const imagePath = './media/beltah-banner.png';
 
-  // Send banner
-  await sock.sendMessage(from, { text: '```' + bigText + '```' }, { quoted: msg });
-  await delay(900);
+  const menuCaption = `*🟢 B.E.L.T.A.H BOT 🟢*\n
+🤖 _Street-smart WhatsApp bot powered by ChatGPT_  
+🧠 AI Brain: ChatGPT × Gminae × CrewDrew  
+📲 Works offline with Tamax or Termux  
+🔐 Locked to: wa.me/254741819582
 
-  // Main menu message
-  const menuMessage = `
-${lang.menuHeader}
-
-╭──[ 🧠 AI FEATURES ]──⭓
+╭──[ 🧠 *AI FEATURES* ]──⭓
 │ • .chat [msg] – ${lang.aiChat}
 │ • .romantic [msg] – ${lang.aiRomantic}
 │ • .swahili [msg] – ${lang.aiSwahili}
 ╰───────────────⭕
 
-╭──[ 🎯 FUN ZONE ]──⭓
+╭──[ 🎯 *FUN ZONE* ]──⭓
 │ • .truth – ${lang.funTruth}
 │ • .dare – ${lang.funDare}
 ╰───────────────⭕
 
-╭──[ 🛠 GENERAL ]──⭓
+╭──[ ⚙️ *GENERAL* ]──⭓
 │ • .ping – ${lang.genPing}
 │ • .menu – ${lang.genMenu}
 │ • .owner – ${lang.genOwner}
 ╰───────────────⭕
 
-╭──[ 🎨 MEDIA TOOLS ]──⭓
+╭──[ 🎨 *MEDIA TOOLS* ]──⭓
 │ • .sticker – ${lang.mediaSticker}
 │ • .attp [text] – ${lang.mediaATTP}
 ╰───────────────⭕
 
-╭──[ 🔒 GROUP ADMIN ]──⭓
+╭──[ 🔒 *GROUP ADMIN* ]──⭓
 │ • .kick @user – ${lang.adminKick}
 │ • .mute – ${lang.adminMute}
 │ • .unmute – ${lang.adminUnmute}
 ╰───────────────⭕
 
-${lang.botStatus}
-📅 Date: ${new Date().toLocaleDateString()}
-🕰 Time: ${new Date().toLocaleTimeString()}
-
-${lang.help}
+📅 *Date:* ${new Date().toLocaleDateString()}
+🕰 *Time:* ${new Date().toLocaleTimeString()}
 `;
 
-  await sock.sendMessage(from, { text: menuMessage }, { quoted: msg });
+  // Send the image menu
+  await sock.sendMessage(from, {
+    image: fs.readFileSync(imagePath),
+    caption: menuCaption,
+  }, { quoted: msg });
 };
 
 module.exports = menuCommand;
