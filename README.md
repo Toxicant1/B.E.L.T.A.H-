@@ -1,4 +1,4 @@
-h1 align="center">
+<h1 align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=44&duration=3000&pause=1500&color=00FF66&center=true&vCenter=true&width=1000&lines=B.E.L.T.A.H" alt="B.E.L.T.A.H Typing Animation" />
 </h1>
 
@@ -17,84 +17,66 @@ h1 align="center">
 ### 👋🏽 What’s B.E.L.T.A.H?
 
 > **B.E.L.T.A.H** is your smart street bot 🤖  
-> Mix of **Swahili slang**, **ChatGPT AI**, and offline power 💯  
-> Made to run fast on **Termux** or **Tamax** – No laptop needed!  
+> Mix of Swahili slang, ChatGPT AI, and offline power 💯  
+> Built to run on Termux or Tamax – No laptop needed!  
 > 🔐 Bot locked to owner: `+254741819582`
 
 ---
 
 ### ⚙️ FEATURES
 
-- 💬 Smart AI Chat (Sheng’ + Hinglish + Emoji)  
+- 🧠 Smart AI Chat (Sheng’ + Hinglish + Emoji)  
 - 😍 Modes: Romantic, Polite, Savage, IGIMO  
 - 🖼️ Image tools + Stickers (via GIMP)  
-- 🔐 Locked kwa WhatsApp number yako  
+- 🔐 Locked to your WhatsApp number  
 - 👑 Group admin tools (kick, promote, mute)  
-- 📴 Works offline with Tamax or Termux  
-- 🧠 AI Stack: Gminae → CrewDrew → **CHATGPT**
+- 📴 Offline via Tamax or Termux  
+- 🧬 Powered by: Gminae → CrewDrew → **CHATGPT**
 
 ---
 
 ### 🚀 HOW TO INSTALL — NO STRESS!
 
-#### ☑️ TERMUX
-1. 📲 Install **Termux** from Play Store  
-2. 🧪 Run basic setup (Node.js + Git)  
-3. 📁 Clone this repo  
-4. 📦 Install & start the bot  
-5. 📸 Scan the QR — done!
+#### 📲 TERMUX METHOD
 
-> Pro command (only if you know):
-```bash
-git clone https://github.com/Toxicant1/BeltahBot-MD && cd BeltahBot-MD && npm install && node index.js
+- 📥 Install Termux from Play Store  
+- 🧰 Inside Termux: install Node.js & Git  
+- 🔽 Download the `BeltahBot-MD` folder  
+- ⚙️ Open folder and install dependencies  
+- 📸 Scan the WhatsApp QR code to start
 
+✅ That’s it! Beltah is running.
 
 ---
 
-📱 TAMAX (No Laptop Needed)
+#### 📱 TAMAX METHOD (No Laptop)
 
-> For Android users who want easy bot hosting 🔋
+- 📲 Download the **Tamax App**  
+- 📂 Upload `BeltahBot-MD` into Tamax  
+- 🖥️ Open Tamax Terminal  
+- ⚙️ Install & run the bot inside  
+- 📸 Scan the QR to activate WhatsApp
 
-
-
-1. Download Tamax App
-
-
-2. Upload your BeltahBot-MD folder
-
-
-3. Open terminal and run install/start commands
-
-
-4. Scan QR and you’re good!
-
-
-
+✅ You’re live with BeltahBot — offline & smart!
 
 ---
 
-📞 OWNER CONTACTS
+### 💌 OWNER CONTACTS
 
-📱 WhatsApp: +254741819582
-
-📧 Email: isaac0maina@gmail.com
-
-📧 Alt Email: ishaq78ibrahim@gmail.com
-
-📸 Instagram: @toxic._.a.n.t
-
-
+- 📞 WhatsApp: [`+254741819582`](https://wa.me/254741819582)  
+- 📧 Email: isaac0maina@gmail.com  
+- 📧 Alt Email: ishaq78ibrahim@gmail.com  
+- 📸 Instagram: [@toxic._.a.n.t](https://instagram.com/toxic._.a.n.t)
 
 ---
 
-⚖️ LICENSE
+### ⚖️ LICENSE
 
-MIT License  
-Author: Ishaq Ibrahim  
-© 2025 BeltahBot-MD
-
+- MIT License  
+- Author: Ishaq Ibrahim  
+- © 2025 BeltahBot-MD
 
 ---
 
-> 💚 Beltah is more than a bot... it’s a street-made digital assistant.
-Use it. Customize it. Enjoy the AI vibes 😎
+> 💚 *Hii si bot ya kawaida... ni ya mtaa, ni ya akili, ni ya Beltah.*  
+> Enjoy Beltah. Spread the vibe. Hakuna coding stress 😎
