@@ -1,4 +1,5 @@
- <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=44&duration=3000&pause=1500&color=00FF66&center=true&vCenter=true&width=1000&lines=B.E.L.T.A.H" alt="B.E.L.T.A.H Typing Animation" />
+h1 align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=44&duration=3000&pause=1500&color=00FF66&center=true&vCenter=true&width=1000&lines=B.E.L.T.A.H" alt="B.E.L.T.A.H Typing Animation" />
 </h1>
 
 <h3 align="center">
@@ -8,86 +9,75 @@
 <h2 align="center"><strong>💬 CHATGPT - MAIN AI BRAIN 🧠</strong></h2>
 
 <p align="center">
-  <img src="imagemedia/file_0000000008d86230b547dced9065a725.png" width="85%" alt="BeltahBot Banner" />
+  <img src="https://github.com/Toxicant1/B.E.L.T.A.H-/blob/main/beltah-banner.png?raw=true" width="85%" alt="BeltahBot Banner" />
 </p>
 
 ---
 
 ### 👋🏽 What’s B.E.L.T.A.H?
 
-> **B.E.L.T.A.H** ni bot ya mtaa – iko na roho ya AI, mwili ya WhatsApp 😎  
-> Iko na emoji vibes, Swahili slang, na akili ya **ChatGPT**  
-> Inafanya kazi bila stress kwenye **Termux** ama **Tamax** (offline 💯)  
-> Bot iko locked kwa namba ya owner: `+254741819582`
+> **B.E.L.T.A.H** is your smart street bot 🤖  
+> Mix of **Swahili slang**, **ChatGPT AI**, and offline power 💯  
+> Made to run fast on **Termux** or **Tamax** – No laptop needed!  
+> 🔐 Bot locked to owner: `+254741819582`
 
 ---
 
-### 🧰 FEATURES ZA B.E.L.T.A.H BOT:
+### ⚙️ FEATURES
 
-- 💬 AI Chat – Kiswahili + Hinglish + Emoji powered  
-- 😍 Romantic, polite, savage, na IGIMO modes  
-- 🖼️ Image & sticker tools (via GIMP, not SHARP)  
-- 🔐 Locked kwa namba yako tu  
-- 👑 Group control tools (admins only)  
-- 💥 Offline mode bila kujali net  
-- 🧠 Powered by: Gminae → CrewDrew → **CHATGPT**
+- 💬 Smart AI Chat (Sheng’ + Hinglish + Emoji)  
+- 😍 Modes: Romantic, Polite, Savage, IGIMO  
+- 🖼️ Image tools + Stickers (via GIMP)  
+- 🔐 Locked kwa WhatsApp number yako  
+- 👑 Group admin tools (kick, promote, mute)  
+- 📴 Works offline with Tamax or Termux  
+- 🧠 AI Stack: Gminae → CrewDrew → **CHATGPT**
 
 ---
 
-### 📦 INSTALLATION: TERMUX 🟢
+### 🚀 HOW TO INSTALL — NO STRESS!
 
+#### ☑️ TERMUX
+1. 📲 Install **Termux** from Play Store  
+2. 🧪 Run basic setup (Node.js + Git)  
+3. 📁 Clone this repo  
+4. 📦 Install & start the bot  
+5. 📸 Scan the QR — done!
+
+> Pro command (only if you know):
 ```bash
-pkg update && pkg upgrade
-pkg install nodejs git
-git clone https://github.com/Toxicant1/BeltahBot-MD
-cd BeltahBot-MD
-npm install
-node index.js
+git clone https://github.com/Toxicant1/BeltahBot-MD && cd BeltahBot-MD && npm install && node index.js
 
-> 🔑 Hakikisha umeweka session yako ndani ya /session folder
-📲 Number ya bot ni +254741819582 (Beltah haifanyi kazi na number zingine!)
+
+---
+
+📱 TAMAX (No Laptop Needed)
+
+> For Android users who want easy bot hosting 🔋
+
+
+
+1. Download Tamax App
+
+
+2. Upload your BeltahBot-MD folder
+
+
+3. Open terminal and run install/start commands
+
+
+4. Scan QR and you’re good!
 
 
 
 
 ---
 
-🔧 SETUP VIA TAMAX 💻
+📞 OWNER CONTACTS
 
-> Tamax ni platform ya kuhost WhatsApp bots bila stress na bila net ya computer.
-Unaweza run BeltahBot ndani yake bila desktop at all 😎
+📱 WhatsApp: +254741819582
 
-
-
-🧪 STEPS:
-
-1. 🛠️ Install Tamax App kutoka Play Store
-
-
-2. 📁 Upload Folder ya BeltahBot-MD
-
-
-3. ⚙️ Open Terminal ndani ya Tamax
-
-
-4. 💥 Run:
-
-
-
-npm install
-node index.js
-
-✅ Uko ndani! Beltah itaanza ku-run kama kuna session file tayari.
-If not, follow the QR code on your first run to scan via WhatsApp.
-
-
----
-
-💌 OWNER CONTACTS
-
-📞 WhatsApp: +254741819582
-
-📧 Main Email: isaac0maina@gmail.com
+📧 Email: isaac0maina@gmail.com
 
 📧 Alt Email: ishaq78ibrahim@gmail.com
 
@@ -100,13 +90,11 @@ If not, follow the QR code on your first run to scan via WhatsApp.
 ⚖️ LICENSE
 
 MIT License  
-Copyright (c) 2025  
-Author: Ishaq Ibrahim
+Author: Ishaq Ibrahim  
+© 2025 BeltahBot-MD
 
 
 ---
 
-> 🌟 If you like BeltahBot, vibe nayo, customize, and share it.
-Hii si bot ya kawaida... ni ya mtaa, ni ya akili, ni ya Beltah 💚
-
--
+> 💚 Beltah is more than a bot... it’s a street-made digital assistant.
+Use it. Customize it. Enjoy the AI vibes 😎
