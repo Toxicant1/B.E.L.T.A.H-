@@ -13,7 +13,6 @@ async function startBeltahBot() {
   const Beltah = makeWASocket({
     auth: state,
     logger: P({ level: 'silent' }),
-    printQRInTerminal: true
   });
 
   Beltah.ev.on('creds.update', saveCreds);
