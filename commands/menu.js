@@ -1,27 +1,44 @@
 // commands/menu.js
 
+const fs = require('fs');
+const path = require('path');
 const figlet = require('figlet');
+
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const menuCommand = async (sock, msg) => {
   const from = msg.key.remoteJid;
 
-  // Generate big text for "B.E.L.T.A.H"
+  // Generate big bold "B.E.L.T.A.H"
   const bigText = figlet.textSync('B.E.L.T.A.H', {
     font: 'Standard',
     horizontalLayout: 'default',
     verticalLayout: 'default'
   });
 
-  // Send typing animation
+  // 1. Typing animation
   await sock.sendPresenceUpdate('composing', from);
-  await delay(500);
+  await delay(400);
 
-  // Send big bold name
+  // 2. Send intro audio 🎶
+  const introAudio = fs.readFileSync(path.join(__dirname, '../media/menu-song.ogg'));
+  await sock.sendMessage(from, {
+    audio: introAudio,
+    mimetype: 'audio/ogg',
+    ptt: true
+  }, { quoted: msg });
+
+  await delay(1500);
+
+  // 3. Send bold name
   await sock.sendMessage(from, { text: '```' + bigText + '```' }, { quoted: msg });
+
   await delay(1000);
 
-  const menuMessage = `
+  // 4. Prepare the image + text menu
+  const menuImage = fs.readFileSync(path.join(__dirname, '../media/menu.jpg'));
+
+  const caption = `
 📍 *Your Digital Buddy on WhatsApp*  
 🧠 AI · 🔧 Tools · 🎮 Fun · 🛡 Admin Panel  
 
@@ -60,7 +77,11 @@ const menuCommand = async (sock, msg) => {
 _💬 Beltah iko radhi kusaidia!_
 `;
 
-  await sock.sendMessage(from, { text: menuMessage }, { quoted: msg });
+  // 5. Send menu image with caption
+  await sock.sendMessage(from, {
+    image: menuImage,
+    caption
+  }, { quoted: msg });
 };
 
 module.exports = menuCommand;
