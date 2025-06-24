@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * BeltahBot - index.js
  * Author: Ishaq Ibrahim
@@ -25,7 +27,7 @@ async function startBeltahBot() {
     const { connection, qr, lastDisconnect } = update;
 
     if (qr) {
-      console.log('\n📸 Scan this QR Code to connect WhatsApp:\n');
+      console.log('\n📲 Scan this QR Code to connect WhatsApp:\n');
       console.log(qr);
     }
 
@@ -34,7 +36,7 @@ async function startBeltahBot() {
     }
 
     if (connection === 'close') {
-      const shouldReconnect =
+      const shouldReconnect = 
         lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
 
       console.log('❌ Connection closed. Reconnecting:', shouldReconnect);
@@ -42,7 +44,7 @@ async function startBeltahBot() {
       if (shouldReconnect) {
         startBeltahBot();
       } else {
-        console.log('🛑 Logged out. Delete session folder and scan again.');
+        console.log('🚫 Logged out. Delete session folder and scan again.');
       }
     }
   });
@@ -50,13 +52,18 @@ async function startBeltahBot() {
   // ✅ Simple auto-reply example
   Beltah.ev.on('messages.upsert', async ({ messages }) => {
     const msg = messages[0];
-    if (!msg.message) return;
+    if (!msg?.message) return;
 
-    const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
+    const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
     if (text?.toLowerCase() === '.menu') {
-      await Beltah.sendMessage(msg.key.remoteJid, { text: '🔥 Beltah menu is loading...' });
+      await Beltah.sendMessage(msg.key.remoteJid, { text: '🔥 BeltahBot Menu Coming Soon!' });
     }
   });
 }
 
+// Start the bot
 startBeltahBot();
+
+// ✅ Handle Termux unhandled errors
+process.on('uncaughtException', console.error);
+process.on('unhandledRejection', console.error);
