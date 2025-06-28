@@ -1,69 +1,76 @@
-#!/usr/bin/env node
-
 /**
- * BeltahBot - index.js
- * Author: Ishaq Ibrahim
+ * B.E.L.T.A.H - index.js
+ * Owner: Ishaq Ibrahim
  * Powered by: Beltah x Knight
  */
 
-const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys');
-const P = require('pino');
+const {
+  default: makeWASocket,
+  useMultiFileAuthState,
+  DisconnectReason,
+  fetchLatestBaileysVersion,
+} = require('@whiskeysockets/baileys');
 
-async function startBeltahBot() {
-  const { state, saveCreds } = await useMultiFileAuthState('./session');
+const pino = require('pino');
+const fs = require('fs');
 
-  const Beltah = makeWASocket({
+const SESSION_FOLDER = './session';
+if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
+
+const startBeltahBot = async () => {
+  const { state, saveCreds } = await useMultiFileAuthState(SESSION_FOLDER);
+  const { version } = await fetchLatestBaileysVersion();
+
+  const sock = makeWASocket({
+    version,
+    logger: pino({ level: 'silent' }),
+    printQRInTerminal: false,
     auth: state,
-    logger: P({ level: 'silent' }),
-    browser: ['BeltahBot', 'Termux', '1.0'],
-    markOnlineOnConnect: true
+    // MODIFIED: Using a different browser agent for better compatibility
+    browser: ['Chrome', 'Windows', '1.0.0'],
   });
 
-  // ✅ Save session
-  Beltah.ev.on('creds.update', saveCreds);
+  let pairingTried = false;
 
-  // ✅ Show QR manually (fixed for latest Baileys)
-  Beltah.ev.on('connection.update', (update) => {
-    const { connection, qr, lastDisconnect } = update;
+  sock.ev.on('connection.update', async (update) => {
+    const { connection, lastDisconnect } = update;
 
-    if (qr) {
-      console.log('\n📲 Scan this QR Code to connect WhatsApp:\n');
-      console.log(qr);
+    if (connection === 'connecting') {
+      console.log('⏳ Connecting to WhatsApp...');
     }
 
     if (connection === 'open') {
-      console.log('✅ B.E.L.T.A.H Bot is now connected to WhatsApp!');
+      console.log('✅ B.E.L.T.A.H connected successfully!');
     }
 
     if (connection === 'close') {
-      const shouldReconnect = 
-        lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
+      const statusCode = lastDisconnect?.error?.output?.statusCode;
+      const shouldReconnect = statusCode !== DisconnectReason.loggedOut;
+      console.log(`❌ Connection closed (code: ${statusCode}). Reconnect: ${shouldReconnect}`);
+      if (shouldReconnect) startBeltahBot();
+    }
 
-      console.log('❌ Connection closed. Reconnecting:', shouldReconnect);
-
-      if (shouldReconnect) {
-        startBeltahBot();
-      } else {
-        console.log('🚫 Logged out. Delete session folder and scan again.');
-      }
+    // MODIFIED: This block attempts to generate a pairing code if the bot is not registered.
+    if (connection === 'connecting' && !sock.authState.creds.registered && !pairingTried) {
+        pairingTried = true;
+        try {
+            console.log('⏳ Attempting to generate pairing code...');
+            const phoneNumber = '254741819582'; // Your phone number
+            // Request the pairing code from WhatsApp
+            const code = await sock.requestPairingCode(phoneNumber);
+            if (code) {
+                console.log(`\n📲 Pairing Code: ${code}\n`);
+                console.log('👉 Go to WhatsApp > Linked Devices > Use Pairing Code to link this device.\n');
+            } else {
+                console.error('❌ Failed to generate pairing code: Code is null or undefined.');
+            }
+        } catch (err) {
+            console.error('❌ Failed to generate pairing code:', err.message);
+        }
     }
   });
 
-  // ✅ Simple auto-reply example
-  Beltah.ev.on('messages.upsert', async ({ messages }) => {
-    const msg = messages[0];
-    if (!msg?.message) return;
+  sock.ev.on('creds.update', saveCreds);
+};
 
-    const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
-    if (text?.toLowerCase() === '.menu') {
-      await Beltah.sendMessage(msg.key.remoteJid, { text: '🔥 BeltahBot Menu Coming Soon!' });
-    }
-  });
-}
-
-// Start the bot
 startBeltahBot();
-
-// ✅ Handle Termux unhandled errors
-process.on('uncaughtException', console.error);
-process.on('unhandledRejection', console.error);
