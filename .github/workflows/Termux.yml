@@ -1,34 +1,39 @@
 # .github/workflows/deploy-termux.yml
-
-name: 🚀 BeltahBot termux Deploy
+name: 🚀 BeltahBot Termux Deploy
 
 on:
   push:
-    branches: [ "main" ]
-  workflow_dispatch:
+    branches: [ "main" ]          # run on every push to main
+  workflow_dispatch:              # allow manual trigger from the Actions tab
 
 jobs:
-  deploy-tamax:
-    name: Deploy to termux via GitHub Pull
+  build-artifact:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write               # needed for upload-artifact
 
     steps:
-      - name: 🧾 Checkout Repo
-        uses: actions/checkout@v4
+      # 1️⃣ Check out the repo
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1           # faster, we don’t need full history
 
-      - name: 🧹 Auto Cleanup (Optional)
+      # 2️⃣ (Optional) clean up things that don’t belong in the archive
+      - name: 🧹 Clean temp folders
         run: |
-          echo "Cleaning up unnecessary files..."
-          rm -rf test/ logs/
+          rm -rf ./test ./logs || true
 
-      - name: 🛠 Prepare Deploy Artifact
+      # 3️⃣ Create a tarball **outside** the repo folder to avoid recursion
+      - name: 📦 Create deploy archive
         run: |
-          mkdir deploy-beltah
-          cp -r * deploy-beltah
-          tar -czf beltahbot-md.tar.gz deploy-beltah
-          echo "Bot compressed to beltahbot-md.tar.gz"
+          cd ${{ github.workspace }}
+          tar  --exclude='.git' \
+               --exclude='node_modules' \
+               -czf beltahbot-md.tar.gz .
 
-      - name: 📦 Upload Artifact (Optional)
+      # 4️⃣ Upload the artefact so you can pull it from Termux/Tamax
+      - name: ⬆️  Upload deploy artefact
         uses: actions/upload-artifact@v4
         with:
           name: beltahbot-md
