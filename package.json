@@ -1,18 +1,23 @@
 {
   "name": "beltahbot-md",
   "version": "1.0.0",
-  "description": "🔥 BeltahBot-MD - WhatsApp AI Bot powered by Beltah × Knight",
+  "description": "🔥 BeltahBot-MD - WhatsApp AI Bot powered by Beltah × Knight, optimized for Termux",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "tarmac": "node index.js"
   },
   "keywords": [
     "whatsapp-bot",
-    "baileys",
     "beltah",
+    "termux",
     "termux-bot",
     "chatgpt",
-    "ai"
+    "ai",
+    "baileys",
+    "mp3-bot",
+    "gpt-bot"
   ],
   "author": "Ishaq Ibrahim",
   "license": "MIT",
@@ -20,6 +25,12 @@
     "@whiskeysockets/baileys": "^6.6.0",
     "axios": "^1.7.2",
     "chalk": "^5.3.0",
-    "figlet": "^1.5.2"
+    "figlet": "^1.5.2",
+    "fs-extra": "^11.1.1",
+    "moment": "^2.29.4",
+    "pino": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18.x"
   }
 }
