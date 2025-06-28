@@ -3,38 +3,36 @@ name: 🚀 BeltahBot Termux Deploy
 
 on:
   push:
-    branches: [ "main" ]          # run on every push to main
-  workflow_dispatch:              # allow manual trigger from the Actions tab
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build-artifact:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      actions: write               # needed for upload-artifact
+      actions: write
 
     steps:
-      # 1️⃣ Check out the repo
-      - uses: actions/checkout@v4
+      - name: 🧾 Checkout Repo
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 1           # faster, we don’t need full history
+          fetch-depth: 1
 
-      # 2️⃣ (Optional) clean up things that don’t belong in the archive
-      - name: 🧹 Clean temp folders
+      - name: 🧹 Clean Unwanted Files
         run: |
           rm -rf ./test ./logs || true
 
-      # 3️⃣ Create a tarball **outside** the repo folder to avoid recursion
-      - name: 📦 Create deploy archive
+      - name: 📦 Create Archive for Tamax
         run: |
-          cd ${{ github.workspace }}
-          tar  --exclude='.git' \
-               --exclude='node_modules' \
-               -czf beltahbot-md.tar.gz .
+          WORKDIR=/tmp/beltahbot-md
+          mkdir -p $WORKDIR
+          cp -r . $WORKDIR
+          cd $WORKDIR
+          tar --exclude='.git' --exclude='node_modules' -czf beltahbot-md.tar.gz .
 
-      # 4️⃣ Upload the artefact so you can pull it from Termux/Tamax
-      - name: ⬆️  Upload deploy artefact
+      - name: ⬆️ Upload Archive
         uses: actions/upload-artifact@v4
         with:
           name: beltahbot-md
-          path: beltahbot-md.tar.gz
+          path: /tmp/beltahbot-md/beltahbot-md.tar.gz
