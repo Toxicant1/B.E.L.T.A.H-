@@ -1,19 +1,33 @@
 // commands/menuCommand.js
 const config = require('../config');
 const getLang = require('../settings/language');
+const fs = require('fs');
 const lang = getLang(config.language);
-const delay = (ms = 400) => new Promise((res) => setTimeout(res, ms));
+const delay = (ms = 500) => new Promise((res) => setTimeout(res, ms));
 
 const menuCommand = async (sock, msg) => {
   const from = msg.key.remoteJid;
 
   if (config.typingIndicator) {
     await sock.sendPresenceUpdate('composing', from);
-    await delay();
+    await delay(400);
   }
 
-  const status = (val) => val ? '✅ ON' : '❌ OFF';
+  // ✅ Step 1: Play the intro audio before menu
+  const introPath = './media/menu-song.ogg';
+  if (fs.existsSync(introPath)) {
+    await sock.sendMessage(from, {
+      audio: fs.readFileSync(introPath),
+      mimetype: 'audio/ogg',
+      ptt: false
+    }, { quoted: msg });
+    await delay(1200); // Delay after audio to give time before menu
+  } else {
+    console.warn('⚠️ Intro music not found at:', introPath);
+  }
 
+  // ✅ Step 2: Send the decorated menu text
+  const status = (v) => v ? '✅ ON' : '❌ OFF';
   const menuText = `
 ╔══════════════════════════════════╗
 ║         🎉 𝗕.𝗘.𝗟.𝗧.𝗔.𝗛 𝗠𝗘𝗡𝗨 🎉         ║
@@ -26,46 +40,45 @@ const menuCommand = async (sock, msg) => {
 ║ 🛡️ 𝗔𝗻𝘁𝗶-𝗗𝗲𝗹𝗲𝘁𝗲: ${status(config.antiDelete)}
 ╚══════════════════════════════════╝
 
+╔═══ 🎵 𝗠𝗨𝗦𝗜𝗖 𝗣𝗟𝗔𝗬𝗘𝗥 ════════════════╗
+║ • .play [song]
+║ • .yta [url]
+║ • .ytv [url]
+║ • .lyrics [song]
+║ • .shazam [reply audio]
+╚══════════════════════════════════╝
+
 ╔═══ 🧠 𝗔𝗜 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 ═════════════════╗
-║ • ${config.prefix[0]}chat [msg]     – ${lang.aiChat}
-║ • ${config.prefix[0]}romantic [msg] – ${lang.aiRomantic}
-║ • ${config.prefix[0]}swahili [msg]  – ${lang.aiSwahili}
+║ • .chat [msg]     – ${lang.aiChat}
+║ • .romantic [msg] – ${lang.aiRomantic}
+║ • .swahili [msg]  – ${lang.aiSwahili}
 ╚══════════════════════════════════╝
 
 ╔═══ 🎯 𝗙𝗨𝗡 𝗭𝗢𝗡𝗘 ══════════════════════╗
-║ • ${config.prefix[0]}truth – ${lang.funTruth}
-║ • ${config.prefix[0]}dare  – ${lang.funDare}
+║ • .truth – ${lang.funTruth}
+║ • .dare  – ${lang.funDare}
 ╚══════════════════════════════════╝
 
 ╔═══ ⚙️ 𝗚𝗘𝗡𝗘𝗥𝗔𝗟 ══════════════════════╗
-║ • ${config.prefix[0]}ping  – ${lang.genPing}
-║ • ${config.prefix[0]}menu  – ${lang.genMenu}
-║ • ${config.prefix[0]}owner – ${lang.genOwner}
+║ • .ping  – ${lang.genPing}
+║ • .menu  – ${lang.genMenu}
+║ • .owner – ${lang.genOwner}
 ╚══════════════════════════════════╝
 
 ╔═══ 🎨 𝗠𝗘𝗗𝗜𝗔 𝗧𝗢𝗢𝗟𝗦 ═════════════════╗
-║ • ${config.prefix[0]}sticker     – ${lang.mediaSticker}
-║ • ${config.prefix[0]}attp [text] – ${lang.mediaATTP}
+║ • .sticker     – ${lang.mediaSticker}
+║ • .attp [text] – ${lang.mediaATTP}
 ╚══════════════════════════════════╝
 
 ╔═══ 🔒 𝗔𝗗𝗠𝗜𝗡 𝗢𝗡𝗟𝗬 ══════════════════╗
-║ • ${config.prefix[0]}kick @user – ${lang.adminKick}
-║ • ${config.prefix[0]}mute       – ${lang.adminMute}
-║ • ${config.prefix[0]}unmute     – ${lang.adminUnmute}
+║ • .kick @user – ${lang.adminKick}
+║ • .mute       – ${lang.adminMute}
+║ • .unmute     – ${lang.adminUnmute}
 ╚══════════════════════════════════╝
 
-╔═══ 🎵 𝗠𝗨𝗦𝗜𝗖 𝗣𝗟𝗔𝗬𝗘𝗥 ════════════════╗
-║ • ${config.prefix[0]}play [song name]
-║ • ${config.prefix[0]}yta [yt url]
-║ • ${config.prefix[0]}ytv [yt url]
-║ • ${config.prefix[0]}lyrics [song]
-║ • ${config.prefix[0]}shazam [reply audio]
-╚══════════════════════════════════╝
-
-📆 *𝗗𝗮𝘁𝗲:* ${new Date().toLocaleDateString()}
-🕒 *𝗧𝗶𝗺𝗲:* ${new Date().toLocaleTimeString()}
-🔗 *𝗥𝗲𝗽𝗼:* ${config.repo || 'N/A'}
-🔖 *𝗙𝗼𝗼𝘁𝗲𝗿:* ${config.footer || 'Powered by Beltah x Knight'}
+📅 *Date:* ${new Date().toLocaleDateString()}
+🕒 *Time:* ${new Date().toLocaleTimeString()}
+🔖 *Powered by:* Beltah × Knight
 `;
 
   await sock.sendMessage(from, { text: menuText.trim() }, { quoted: msg });
