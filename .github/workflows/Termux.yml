@@ -1,0 +1,35 @@
+# .github/workflows/deploy-termux.yml
+
+name: 🚀 BeltahBot termux Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy-tamax:
+    name: Deploy to termux via GitHub Pull
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧾 Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: 🧹 Auto Cleanup (Optional)
+        run: |
+          echo "Cleaning up unnecessary files..."
+          rm -rf test/ logs/
+
+      - name: 🛠 Prepare Deploy Artifact
+        run: |
+          mkdir deploy-beltah
+          cp -r * deploy-beltah
+          tar -czf beltahbot-md.tar.gz deploy-beltah
+          echo "Bot compressed to beltahbot-md.tar.gz"
+
+      - name: 📦 Upload Artifact (Optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: beltahbot-md
+          path: beltahbot-md.tar.gz
