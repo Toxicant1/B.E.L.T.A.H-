@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1500&color=00FF66&center=true&vCenter=true&width=1000&lines=⚡+Powered+by+Ishaq+Ibrahim+BELTAH" alt="Ishaq Ibrahim beltah Typing" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1500&color=00FF66&center=true&vCenter=true&width=1000&lines=⚡+Powered+by+Ishaq+Ibrahim+BELTAH" alt="Ishaq Ibrahim and BELTAH Typing" />
 </h3>
 
 <h2 align="center"><strong>💬 CHATGPT - MAIN AI BRAIN 🧠</strong></h2>
