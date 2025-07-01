@@ -23,13 +23,13 @@ jobs:
         run: |
           rm -rf ./test ./logs || true
 
-      - name: 📦 Create Archive for Tamax
+          - name: 📦 Create Archive for Tamax
         run: |
           WORKDIR=/tmp/beltahbot-md
           mkdir -p $WORKDIR
           cp -r . $WORKDIR
           cd $WORKDIR
-          tar --exclude='.git' --exclude='node_modules' -czf beltahbot-md.tar.gz .
+          tar --exclude='.git' --exclude='node_modules' -czf beltahbot-md.tar.gz . || true 
 
       - name: ⬆️ Upload Archive
         uses: actions/upload-artifact@v4
