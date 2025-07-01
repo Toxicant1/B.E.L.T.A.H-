@@ -1,4 +1,3 @@
-// commands/menuCommand.js
 const config = require('../config');
 const getLang = require('../settings/language');
 const fs = require('fs');
@@ -25,64 +24,72 @@ const menuCommand = async (sock, msg) => {
     await delay(1200);
   }
 
-  // ✅ Step 2: Generate menu caption
+  // ✅ Step 2: Build fancy menu text
   const status = (v) => v ? '✅ ON' : '❌ OFF';
   const menuCaption = `
-╔══════════════════════════════╗
-║ 🎉 ${config.botName.toUpperCase()} MENU 🎉
-╠══════════════════════════════╣
-👑 Owner: ${config.ownerName}
-🔐 Locked to: wa.me/${config.ownerNumber.replace('+', '')}
-⚙️ Mode: ${status(config.public)}
-🤖 AI: ${status(config.aiEnabled)} (${config.aiEngine.toUpperCase()})
-👁️ Auto-Status: ${status(config.autoViewStatus)}
-🛡️ Anti-Delete: ${status(config.antiDelete)}
-╚══════════════════════════════╝
+╔════════════════════════════════╗
+║     🎉 ${config.botName.toUpperCase()} COMMAND MENU 🎉     ║
+╠════════════════════════════════╣
+👑 *Owner:* ${config.ownerName}
+👨‍💻 *Core Dev:* ${config.coreDeveloper || 'Raph Muguna'}
+🔐 *Locked to:* wa.me/${config.ownerNumber.replace('+', '')}
+⚙️ *Mode:* ${status(config.public)}
+🤖 *AI Engine:* ${status(config.aiEnabled)} (${config.aiEngine.toUpperCase()})
+👁️ *Auto-Status View:* ${status(config.autoViewStatus)}
+🛡️ *Anti-Delete:* ${status(config.antiDelete)}
+╚════════════════════════════════╝
 
-🎵 MUSIC:
-• .play [song]
-• .yta [url]
-• .ytv [url]
-• .lyrics [song]
-• .shazam [reply audio]
+╔═ 🎵 𝗠𝗨𝗦𝗜𝗖 𝗣𝗟𝗔𝗬𝗘𝗥 ═╗
+║ • .play [song]
+║ • .yta [url]
+║ • .ytv [url]
+║ • .lyrics [song]
+║ • .shazam [reply audio]
+╚═════════════════════════╝
 
-🧠 AI COMMANDS:
-• .chat [msg] – ${lang.aiChat}
-• .romantic [msg] – ${lang.aiRomantic}
-• .swahili [msg] – ${lang.aiSwahili}
+╔═ 🧠 𝗔𝗜 / 𝗖𝗛𝗔𝗧𝗕𝗢𝗧 ═╗
+║ • .chat [msg] – ${lang.aiChat}
+║ • .romantic [msg] – ${lang.aiRomantic}
+║ • .swahili [msg]  – ${lang.aiSwahili}
+╚═════════════════════════╝
 
-🎯 FUN ZONE:
-• .truth – ${lang.funTruth}
-• .dare  – ${lang.funDare}
+╔═ 🎯 𝗙𝗨𝗡 𝗭𝗢𝗡𝗘 ═╗
+║ • .truth – ${lang.funTruth}
+║ • .dare  – ${lang.funDare}
+╚════════════════════╝
 
-⚙️ GENERAL:
-• .ping  – ${lang.genPing}
-• .menu  – ${lang.genMenu}
-• .owner – ${lang.genOwner}
+╔═ ⚙️ 𝗚𝗘𝗡𝗘𝗥𝗔𝗟 ═╗
+║ • .ping     – ${lang.genPing}
+║ • .menu     – ${lang.genMenu}
+║ • .owner    – ${lang.genOwner}
+║ • .restart  – ♻️ Restart bot
+╚════════════════════╝
 
-🎨 MEDIA TOOLS:
-• .sticker     – ${lang.mediaSticker}
-• .attp [text] – ${lang.mediaATTP}
+╔═ 🎨 𝗠𝗘𝗗𝗜𝗔 𝗧𝗢𝗢𝗟𝗦 ═╗
+║ • .sticker     – ${lang.mediaSticker}
+║ • .attp [text] – ${lang.mediaATTP}
+╚════════════════════╝
 
-🔒 ADMIN ONLY:
-• .kick @user – ${lang.adminKick}
-• .mute       – ${lang.adminMute}
-• .unmute     – ${lang.adminUnmute}
+╔═ 🔒 𝗔𝗗𝗠𝗜𝗡 𝗢𝗡𝗟𝗬 ═╗
+║ • .kick @user – ${lang.adminKick}
+║ • .mute       – ${lang.adminMute}
+║ • .unmute     – ${lang.adminUnmute}
+╚════════════════════╝
 
-📅 Date: ${new Date().toLocaleDateString()}
-🕒 Time: ${new Date().toLocaleTimeString()}
-🔖 Powered by: ${config.footer}
-`;
+📅 *Date:* ${new Date().toLocaleDateString()}
+🕒 *Time:* ${new Date().toLocaleTimeString()}
+🔖 *Powered by:* ${config.footer}
+  `.trim();
 
-  // ✅ Step 3: Send image menu or text
-  const bannerPath = './media/beltah-banner.png'; // Or './beltah-banner.png' if outside
+  // ✅ Step 3: Send menu (image or text)
+  const bannerPath = './media/beltah-banner.png';
   if (config.menuStyle === 'image' && fs.existsSync(bannerPath)) {
     await sock.sendMessage(from, {
       image: fs.readFileSync(bannerPath),
-      caption: menuCaption.trim()
+      caption: menuCaption
     }, { quoted: msg });
   } else {
-    await sock.sendMessage(from, { text: menuCaption.trim() }, { quoted: msg });
+    await sock.sendMessage(from, { text: menuCaption }, { quoted: msg });
   }
 };
 
