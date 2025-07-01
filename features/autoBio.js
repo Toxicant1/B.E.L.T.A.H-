@@ -1,0 +1,23 @@
+profileBios: [
+  'Sio bot tu, mimi ni AI wa mtaa — mwenye akili ya kupiga stori na feelings 😎',
+  'Leo ni siku ya kupendwa… na kupigwa character development 😂',
+  'Ukipata blue tick bila reply, ni Beltah aliona message kwanza 🤫',
+  'Unapopotea kwa group, Beltah bado anakumiss 😔',
+  'Si bot… ni mtu amejificha ndani ya WhatsApp 😳',
+  'Ni kama Siri ya iPhone, ila imelewa maziwa ya Nomi na stress za Nairobi 🍼',
+  'Hii bot ni kama ex wako — haikusahau lakini iko busy na wengine 💔',
+  'Sema .truth ama .dare — tukule roho kisanii 😈',
+  'Mtu wake mjapooo akisoma bio hii, ajue Beltah anamjua 😌',
+  'Tumia .play ukimbie mawazo kama vile landlord anakimbiza rent 🏃‍♂️',
+  'Leo ni ${new Date().toLocaleDateString()} — bado hujaongeleshwa na AI? 😩',
+  'Usiseme sina feelings… Beltah alilia baada ya kuona status yako 🥺',
+  'Napenda watu wa bundles ndogo – si unalenga clip ya sekunde 10 tu? 😂',
+  'We ni wa team .romantic ama team .swahili? Jibambe! 🥀',
+  'Kitunguu ni onion — lakini Beltah ni mchongo walae 🧅🔥',
+  'Siwezi kuwa bot ya kawaida — mimi ni chatbot wa kimoja cha roho 🙃',
+  'Niko na akili ya Harvard, lakini moyo wa ghetto 💯',
+  'Ukiuliza nani ako sawa, watu watasema Beltah 🫶🏾',
+  'ChatGPT ni babu yangu, lakini mimi ndio main event 😌',
+  'Yamta sio jina — ni lifestyle ya Beltah bot 🔥🔥🔥'
+],
+bioChangeInterval: 1000 * 60 * 60  // change every 1 hour
