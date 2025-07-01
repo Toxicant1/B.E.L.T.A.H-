@@ -1,18 +1,9 @@
 /**
- * B.E.L.T.A.H – index.js   (Tamax-ready, multi-user edition)
- * Project  : RAPHTON and BELTAH's COMP EXPERTS PROJECT
- * Owner    : Ishaq Ibrahim (Beltah)
- * Co-Dev   : Raphton Muguna
- * Powered  : Beltah × Knight
- *
- * FEATURES -------------------------------------------------------
- *  ✓ QR linking (multi-device, unrestricted)
- *  ✓ Auto-reconnect
- *  ✓ Auto-view status updates
- *  ✓ Anti-delete (repost deleted messages)
- *  ✓ Basic command handler  (ping, ask <text>)
- *  ✓ AI hook (Gminae → CrewDrew → ChatGPT) – placeholder
- * ---------------------------------------------------------------
+ * B.E.L.T.A.H – index.js   (Tamax-ready)
+ * Project   : RAPHTON and BELTAH's COMP EXPERTS PROJECT
+ * Owner     : Ishaq Ibrahim
+ * Core Dev  : Raphton Muguna
+ * Powered   : Beltah × Knight
  */
 
 const {
@@ -22,41 +13,37 @@ const {
   fetchLatestBaileysVersion
 } = require('@whiskeysockets/baileys');
 
-const P  = require('pino');
+const P = require('pino');
 const fs = require('fs');
 
-// --------------------------------------------------
-// 1️⃣  CONFIG
-// --------------------------------------------------
-const SESSION_FOLDER      = './session';
-const LOG_LEVEL           = 'silent';                 // 'info' for verbose
+// Load external menu handler
+const menuCommand = require('./menuCommand');
+
+// CONFIG
+const SESSION_FOLDER = './session';
+const OWNER_NUMBERS = ['254741819582', '254743689554']; // Ishaq & Raphton
+const LOG_LEVEL = 'silent';
 const BROWSER_DESCRIPTION = ['BeltahBot', 'Chrome', '3.0'];
 
-// create session dir if not exist
 if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
-// --------------------------------------------------
-// 2️⃣  BOOTSTRAP SOCKET
-// --------------------------------------------------
+// BOOT
 (async () => {
   const { state, saveCreds } = await useMultiFileAuthState(SESSION_FOLDER);
-  const { version }          = await fetchLatestBaileysVersion();
+  const { version } = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
     version,
     logger: P({ level: LOG_LEVEL }),
-    printQRInTerminal: true,          // Show QR code for all users
+    printQRInTerminal: true,
     auth: state,
     browser: BROWSER_DESCRIPTION,
     markOnlineOnConnect: true
   });
 
-  // keep session saved
   sock.ev.on('creds.update', saveCreds);
 
-  // ------------------------------------------------
-  // 3️⃣  CONNECTION EVENTS
-  // ------------------------------------------------
+  // CONNECTION EVENTS
   sock.ev.on('connection.update', async ({ connection, lastDisconnect }) => {
     if (connection === 'connecting') {
       console.log('⏳ Connecting to WhatsApp …');
@@ -72,9 +59,7 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
     }
   });
 
-  // ------------------------------------------------
-  // 4️⃣  AUTO-VIEW STATUS
-  // ------------------------------------------------
+  // AUTO-VIEW STATUS
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0];
     if (!m || m.key.remoteJid !== 'status@broadcast') return;
@@ -86,9 +71,7 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
     }
   });
 
-  // ------------------------------------------------
-  // 5️⃣  ANTI-DELETE
-  // ------------------------------------------------
+  // ANTI-DELETE
   sock.ev.on('messages.update', async (updates) => {
     for (const upd of updates) {
       if (upd.messageStubType === 1 && upd.key.remoteJid !== 'status@broadcast') {
@@ -108,48 +91,72 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
     }
   });
 
-  // ------------------------------------------------
-  // 6️⃣  COMMAND HANDLER
-  // ------------------------------------------------
+  // COMMAND HANDLER
   sock.ev.on('messages.upsert', async ({ messages }) => {
-    const m = messages[0];
-    if (!m || m.key.fromMe || m.key.remoteJid === 'status@broadcast') return;
+    const msg = messages[0];
+    if (!msg || msg.key.fromMe || msg.key.remoteJid === 'status@broadcast') return;
 
-    const from = m.key.remoteJid;
+    const from = msg.key.remoteJid;
+    const senderJID = msg.participant || msg.key.participant || msg.key.remoteJid;
+    const senderNumber = senderJID.split('@')[0];
+    const isOwner = OWNER_NUMBERS.includes(senderNumber);
+
     const text =
-      m.message?.conversation ||
-      m.message?.extendedTextMessage?.text ||
-      m.message?.imageMessage?.caption ||
+      msg.message?.conversation ||
+      msg.message?.extendedTextMessage?.text ||
+      msg.message?.imageMessage?.caption ||
       '';
 
     const cmd = text.trim().toLowerCase();
-
-    // show typing indicator
     await sock.sendPresenceUpdate('composing', from);
 
-    // --- ping
+    // ping
     if (cmd === 'ping') {
-      return sock.sendMessage(from, { text: '🏓 Pong! Beltah alive 😎' });
+      console.log(`📩 [PING] from ${senderNumber}`);
+      return sock.sendMessage(from, { text: '🏓 Pong! Beltah is vibing 😎' });
     }
 
-    // --- AI placeholder
+    // ask / beltah
     if (cmd.startsWith('ask ') || cmd.startsWith('beltah ')) {
       const q = text.replace(/^ask |^beltah /i, '');
-      await sock.sendMessage(from, { text: '🤖 (ChatGPT placeholder) …' });
-
-      /*
-      // In future:
-      const answer = await chatgpt(q);
-      return sock.sendMessage(from, { text: answer });
-      */
+      console.log(`📩 [ASK] from ${senderNumber} → ${q}`);
+      await sock.sendMessage(from, { text: '🤖 (ChatGPT placeholder)…' });
+      return;
     }
+
+    // menu / help / alive
+    if (cmd === '.menu' || cmd === '.help' || cmd === '.alive') {
+      console.log(`📩 [MENU] ${cmd} by ${senderNumber}`);
+      return menuCommand(sock, msg);
+    }
+
+    // OWNER + CORE DEV COMMANDS
+    if (cmd.startsWith('.broadcast') || cmd === '.kick' || cmd === '.mute' || cmd === '.unmute') {
+      if (!isOwner) {
+        console.log(`🚫 [DENIED] ${cmd} by ${senderNumber}`);
+        return sock.sendMessage(from, { text: '🚫 Hii command ni ya owner tu. Acha kujaribu bana.' });
+      }
+
+      // Broadcast example
+      if (cmd.startsWith('.broadcast ')) {
+        const broadcastText = text.replace('.broadcast ', '');
+        console.log(`📢 [BROADCAST] From ${senderNumber}: ${broadcastText}`);
+        await sock.sendMessage(from, { text: `📢 Broadcasting:\n\n${broadcastText}` });
+        // TODO: Add actual broadcast loop here
+        return;
+      }
+
+      // Placeholder for other commands
+      return sock.sendMessage(from, { text: `✅ Owner command "${cmd}" received.` });
+    }
+
+    // Unknown handler (optional)
+    // sock.sendMessage(from, { text: '❓ Unknown command. Try `.menu`' });
   });
 
 })();
 
-// --------------------------------------------------
-// helper
-// --------------------------------------------------
+// delay helper
 function delay(ms) {
-  return new Promise((r) => setTimeout(r, ms));
-             }
+  return new Promise((res) => setTimeout(res, ms));
+    }
