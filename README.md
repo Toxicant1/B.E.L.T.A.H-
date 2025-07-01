@@ -1,6 +1,7 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=44&duration=3000&pause=1500&color=00FF66&center=true&vCenter=true&width=1000&lines=B.E.L.T.A.H" alt="B.E.L.T.A.H Typing Animation" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=36&duration=3500&pause=1500&color=0AFFB5&center=true&vCenter=true&width=1000&lines=🤖+BELTAHBOT-MD+IS+ALIVE!;🔥+The+Ultimate+Offline+WhatsApp+Bot;🚀+Powered+by+Tamax+and+AI+Triforce!;" alt="BeltahBot Typing Header" />
 </h1>
+ 
 
 <h3 align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1500&color=00FF66&center=true&vCenter=true&width=1000&lines=⚡+Powered+by+Ishaq+Ibrahim+BELTAH" alt="Ishaq Ibrahim and BELTAH Typing" />
