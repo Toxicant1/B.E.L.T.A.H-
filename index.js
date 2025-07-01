@@ -1,5 +1,5 @@
 /**
- * B.E.L.T.A.H – index.js (Tamax-ready, multi-user)
+ * B.E.L.T.A.H – index.js  (Tamax / Termux ready)
  * Owner   : Ishaq Ibrahim
  * CoreDev : Raphton Muguna
  * Powered : Beltah × Knight
@@ -12,22 +12,25 @@ const {
   fetchLatestBaileysVersion
 } = require('@whiskeysockets/baileys');
 
-const P = require('pino');
+const P  = require('pino');
 const fs = require('fs');
 const path = require('path');
-const config = require('./config');
-const menuCommand = require('./commands/menuCommand');
 
-const SESSION_FOLDER = './session';
-const LOG_LEVEL = 'silent';
+const config        = require('./config');
+const menuCommand   = require('./commands/menuCommand');
+const autoViewStatus = require('./features/autoViewStatus');
+const antiDelete     = require('./features/antiDelete');
+const askChatGPT     = require('./chatgpt');               // real AI replies
+
+const SESSION_FOLDER      = './session';
+const LOG_LEVEL           = 'silent';
 const BROWSER_DESCRIPTION = [config.botName, 'Chrome', '3.0'];
 
-// Create session dir
 if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
 (async () => {
   const { state, saveCreds } = await useMultiFileAuthState(SESSION_FOLDER);
-  const { version } = await fetchLatestBaileysVersion();
+  const { version }          = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
     version,
@@ -40,125 +43,90 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
   sock.ev.on('creds.update', saveCreds);
 
-  // 🔁 Auto reconnect + pair code
-  let pairingTried = false;
-
+  /* ───────────────── CONNECTION EVENTS ───────────────── */
   sock.ev.on('connection.update', async ({ connection, lastDisconnect }) => {
     const code = lastDisconnect?.error?.output?.statusCode;
-    if (connection === 'connecting') {
-      console.log('⏳ Connecting to WhatsApp...');
-    }
-    if (connection === 'open') {
-      console.log('✅ BeltahBot is ONLINE and ready!');
-    }
+
+    if (connection === 'connecting') console.log('⏳ Connecting…');
+    if (connection === 'open')      console.log('✅ BeltahBot ONLINE!');
+
     if (connection === 'close') {
       const willReconnect = code !== DisconnectReason.loggedOut;
-      console.log(`❌ Disconnected (code ${code}) | Reconnect: ${willReconnect}`);
-      if (willReconnect) return (await delay(2_000), sock.ws.close());
+      console.log(`❌ Connection closed (${code}). Reconnect: ${willReconnect}`);
+      if (willReconnect) return (await delay(2000), sock.ws.close());
     }
 
+    /* First-run pair-code flow */
     if (connection === 'connecting'
         && !sock.authState.creds.registered
-        && !pairingTried) {
-      pairingTried = true;
+        && !global.__paired) {
+      global.__paired = true;
       try {
-        const code = await sock.requestPairingCode(config.ownerNumber);
-        if (code) {
-          console.log(`📲 Pairing Code: ${code}`);
-          console.log('🔗 WhatsApp ► Linked Devices ► Enter Code');
-        }
-      } catch (err) {
-        console.error('⚠️ Pair-code failed:', err.message);
+        const pc = await sock.requestPairingCode(config.ownerNumber);
+        console.log(`📲 Pair-code: ${pc}\n🔗 WhatsApp ▸ Linked devices ▸ Enter code`);
+      } catch (e) {
+        console.error('Pair-code error:', e.message);
       }
     }
   });
 
-  // 👁️ Auto-view status
-  if (config.autoViewStatus) {
-    sock.ev.on('messages.upsert', async ({ messages }) => {
-      const m = messages[0];
-      if (!m || m.key.remoteJid !== 'status@broadcast') return;
-      try {
-        await sock.readMessages([m.key]);
-        console.log(`👀 Viewed status from ${m.pushName || m.key.participant}`);
-      } catch (err) {
-        console.error('Status-view error:', err);
-      }
-    });
-  }
+  /* ───────────────── FEATURE HANDLERS ───────────────── */
+  sock.ev.on('messages.upsert', (msg)    => autoViewStatus(sock, msg));
+  sock.ev.on('messages.update', (upd)    => antiDelete(sock, upd));
 
-  // 🛡️ Anti-delete
-  if (config.antiDelete) {
-    sock.ev.on('messages.update', async (updates) => {
-      for (const upd of updates) {
-        if (upd.messageStubType === 1 && upd.key.remoteJid !== 'status@broadcast') {
-          try {
-            const original = await sock.loadMessage(upd.key.remoteJid, upd.key.id);
-            if (original?.message) {
-              await sock.sendMessage(
-                upd.key.remoteJid,
-                { forward: original, text: '⚠️ *Deleted message recovered:*' }
-              );
-              console.log('🔁 Re-posted deleted message.');
-            }
-          } catch (err) {
-            console.error('Anti-delete error:', err);
-          }
-        }
-      }
-    });
-  }
-
-  // 🎯 COMMANDS
+  /* ───────────────── COMMAND HANDLER ───────────────── */
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0];
     if (!m || m.key.fromMe || m.key.remoteJid === 'status@broadcast') return;
 
-    const from = m.key.remoteJid;
-    const sender = m.key.participant || m.key.remoteJid;
-    const senderNum = sender.split('@')[0];
-    const isOwnerOrDev = [config.ownerNumber, config.coreDevNumber].includes(senderNum);
+    const from   = m.key.remoteJid;
+    const sender = (m.key.participant || m.key.remoteJid).split('@')[0];
+    const isBoss = [config.ownerNumber, config.coreDevNumber].includes(sender);
 
-    const text = m.message?.conversation ||
-                 m.message?.extendedTextMessage?.text ||
-                 m.message?.imageMessage?.caption || '';
+    const txt =
+      m.message?.conversation ||
+      m.message?.extendedTextMessage?.text ||
+      m.message?.imageMessage?.caption || '';
 
-    const body = text.trim().toLowerCase();
+    const body = txt.trim();
 
-    // Show typing indicator if enabled
-    if (config.typingIndicator) {
-      await sock.sendPresenceUpdate('composing', from);
+    /* typing indicator */
+    if (config.typingIndicator) await sock.sendPresenceUpdate('composing', from);
+
+    /* ----- basic commands ----- */
+    if (/^ping$/i.test(body)) {
+      return sock.sendMessage(from, { text: '🏓 Pong! Beltah iko live 😎' }, { quoted: m });
     }
 
-    // 🏓 Ping
-    if (body === 'ping') {
-      return sock.sendMessage(from, { text: '🏓 Pong! Beltah is online 😎' }, { quoted: m });
+    if (/^(\.menu|\.help|\.alive)$/i.test(body)) {
+      return menuCommand(sock, m);
     }
 
-    // 💬 AI placeholder
-    if (body.startsWith('ask ') || body.startsWith('beltah ')) {
-      const q = body.replace(/^ask |^beltah /i, '');
-      await sock.sendMessage(from, { text: '🤖 (ChatGPT response coming soon...)' }, { quoted: m });
+    /* ----- AI chat commands (.ask / .beltah / .chat) ----- */
+    if (/^(\.?(ask|beltah|chat)\s+)/i.test(body)) {
+      const prompt = body.replace(/^(\.?(ask|beltah|chat)\s+)/i, '').trim();
+      const reply  = await askChatGPT(prompt);
+      return sock.sendMessage(from, { text: reply }, { quoted: m });
     }
 
-    // 📋 Menu command triggers
-    if (['.menu', '.help', '.alive'].includes(body)) {
-      return await menuCommand(sock, m);
-    }
-
-    // 🔒 Owner-only placeholder
-    if (body.startsWith('.kick') || body.startsWith('.mute')) {
-      if (!isOwnerOrDev) {
-        return sock.sendMessage(from, { text: '🚫 This command is owner-only.' }, { quoted: m });
+    /* ----- owner-only placeholders ----- */
+    if (/^\.restart$/i.test(body)) {
+      if (!isBoss) {
+        return sock.sendMessage(from, { text: '🚫 Owner-only command.' }, { quoted: m });
       }
+      await sock.sendMessage(from, { text: '♻️ Restarting Beltah…' }, { quoted: m });
+      return process.exit(0);                   // pm2 / nodemon will revive
+    }
 
-      return sock.sendMessage(from, { text: '🔧 Admin command acknowledged (placeholder).' }, { quoted: m });
+    if (/^(\.kick|\.mute|\.unmute)/i.test(body)) {
+      if (!isBoss)
+        return sock.sendMessage(from, { text: '🚫 Owner-only command.' }, { quoted: m });
+      return sock.sendMessage(from, { text: '🔧 Admin command placeholder.' }, { quoted: m });
     }
   });
-
 })();
 
-// Helper: delay
+/* helper */
 function delay(ms) {
-  return new Promise(res => setTimeout(res, ms));
-                                            }
+  return new Promise((r) => setTimeout(r, ms));
+      }
