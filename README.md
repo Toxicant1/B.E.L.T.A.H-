@@ -15,7 +15,7 @@
 ---
 
 <h2 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&duration=3000&pause=1200&color=E4405F&center=true&vCenter=true&width=900&lines=+Follow+Me+On+Instagram+@TOXIC._A.N.T+@Raph+Muguna" alt="Follow on Instagram Animation" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&duration=3000&pause=1200&color=E4405F&center=true&vCenter=true&width=900&lines=📸+Follow+Us+On+Instagram+@TOXIC._A.N.T+@Raph+Muguna" alt="Follow on Instagram Animation" />
 </h2>
 
 ---
@@ -23,21 +23,21 @@
 ### 👋🏽 What’s B.E.L.T.A.H?
 
 > **B.E.L.T.A.H** is your street-smart bot 🤖  
-> Blended with Swahili slang, ChatGPT intelligence, and full offline power 💯  
-> Built to run on Termux or Tamax – No laptop needed!  
-> 🔐 Fully locked to owner: `+254741819582`
+> Blended with Swahili slang, ChatGPT intelligence, and offline power 💯  
+> Built to run on Termux or Tamax – no laptop needed!  
+> 🔐 Bot fully locked to owner: `+254741819582`
 
 ---
 
 ### ⚙️ FEATURES
 
-- 🧠 **AI-Powered Chat** (Hinglish, Swahili slang, emojis)  
+- 🧠 **AI-Powered Chat** (Sheng’, Hinglish, Emojis)  
 - 😍 **Modes**: Romantic, Polite, Savage, IGIMO  
-- 🖼️ **Media Tools**: GIMP-powered stickers, images  
-- 👑 **Group Admin**: Kick, promote, mute, anti-spam  
-- 🔐 **Private Lock**: Number-locked to you  
-- 📴 **Offline Ready**: Works on Tamax/Termux  
-- 🧬 **AI Engine**: Gminae → CrewDrew → ChatGPT (final output)
+- 🖼️ **Media Tools**: GIMP-based stickers, images  
+- 👑 **Group Admin Tools**: Kick, promote, mute, spam control  
+- 🔐 **Number Lock**: Only usable by set WhatsApp numbers  
+- 📴 **Offline Friendly**: Works with Termux or Tamax  
+- 🧬 **AI Stack**: Gminae → CrewDrew → **ChatGPT**
 
 ---
 
@@ -45,44 +45,57 @@
 
 #### 📲 TERMUX METHOD
 
-1. 📥 Download **Termux** from Play Store  
-2. 🧰 Run Termux and install Git + Node.js  
-3. 🔽 Clone the `BeltahBot-MD` repo  
-4. ⚙️ Install all dependencies (`npm install`)  
-5. 📸 Scan WhatsApp QR to connect
+1. 📥 Install **Termux** from the Play Store  
+2. 🧰 Inside Termux: install `nodejs`, `git`  
+3. 🔽 Clone this repo: `git clone https://github.com/Toxicant1/B.E.L.T.A.H-`  
+4. 📂 `cd B.E.L.T.A.H-` and run `npm install`  
+5. 📸 Scan the WhatsApp QR when prompted
 
-✅ Boom! Beltah is now running.
+✅ Done! Beltah is up and vibing 🟢
 
 ---
 
 #### 📱 TAMAX METHOD (NO LAPTOP NEEDED)
 
-1. 📲 Install the **Tamax App**  
-2. 📂 Upload your `BeltahBot-MD` project  
-3. 🖥️ Open Tamax Terminal  
-4. ⚙️ Install deps and run `node index.js`  
-5. 📸 Scan QR to activate WhatsApp
+1. 📲 Download the **Tamax App**  
+2. 📁 Upload `BeltahBot-MD` into Tamax  
+3. 💻 Open Terminal in Tamax and install using `npm install`  
+4. ▶️ Start bot with `node index.js`  
+5. 📸 Scan your WhatsApp QR code to activate
 
-✅ You’re live — Beltah is ready to vibe!
+✅ Beltah now running offline on mobile 🔥
 
 ---
 
 ### 💌 OWNER CONTACTS
 
-- 📞 WhatsApp: [`+254741819582`](https://wa.me/254741819582)  
-- 📧 Email: isaac0maina@gmail.com  
-- 📧 Alt Email: ishaq78ibrahim@gmail.com  
-- 📸 Instagram: [@toxic._.a.n.t](https://instagram.com/toxic._.a.n.t)
+> 👑 **Main Developer** — *Ishaq Ibrahim (Beltah)*  
+> 🤝 **Co-Developer** — *Raphton Muguna*
+
+#### 📞 WhatsApp Contacts:
+- 🟢 [`+254741819582`](https://wa.me/254741819582) — Ishaq Ibrahim  
+- 🟢 [`+254743689554`](https://wa.me/254743689554) — Raphton Muguna
+
+#### 📧 Email Contacts:
+- 📩 `isaac0maina@gmail.com` — Ishaq  
+- 📩 `ishaq78ibrahim@gmail.com` — Alt Ishaq  
+- 📩 `raphtonmuguna@gmail.com` — Raphton
+
+#### 📸 Instagram Profiles:
+- 📷 [@toxic._.a.n.t](https://instagram.com/toxic._.a.n.t) — Ishaq  
+- 📷 [@raph.muguna](https://instagram.com/raph.muguna) — Raphton
 
 ---
 
 ### ⚖️ LICENSE
 
-- License: MIT  
+- MIT License  
 - Author: **Ishaq Ibrahim**  
+- Co-Dev: **Raphton Muguna**  
 - © 2025 **BeltahBot-MD**
 
 ---
 
 > 💚 *Hii si bot ya kawaida... ni ya mtaa, ni ya akili, ni ya Beltah.*  
-> Enjoy Beltah. Spread the vibe. Hakuna coding stress 😎
+> 🧠 Powered by Tamax, built for Kenya 🇰🇪, driven by ChatGPT.  
+> ✨ Enjoy Beltah. Spread the vibe. Hakuna coding stress 😎
