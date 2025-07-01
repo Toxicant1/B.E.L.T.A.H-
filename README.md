@@ -15,7 +15,7 @@
 ---
 
 <h2 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&duration=3000&pause=1200&color=E4405F&center=true&vCenter=true&width=900&lines=📸+Follow+Me+On+Instagram+@TOXIC._A.N.T+@Raph+Muguna" alt="Follow on Instagram Animation" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&duration=3000&pause=1200&color=E4405F&center=true&vCenter=true&width=900&lines=+Follow+Me+On+Instagram+@TOXIC._A.N.T+@Raph+Muguna" alt="Follow on Instagram Animation" />
 </h2>
 
 ---
