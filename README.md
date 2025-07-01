@@ -1,7 +1,6 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=36&duration=3500&pause=1500&color=0AFFB5&center=true&vCenter=true&width=1000&lines=🤖+BELTAHBOT-MD+IS+ALIVE!;🔥+The+Ultimate+Offline+WhatsApp+Bot;🚀+Powered+by+Tamax+and+AI+Triforce!;" alt="BeltahBot Typing Header" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=40&duration=3500&pause=1500&color=0AFFB5&center=true&vCenter=true&width=1200&lines=💻+RAPHTON+and+BELTAH'S+COMP+EXPERTS+PROJECT;🔥+The+Ultimate+Offline+WhatsApp+Bot;🚀+Powered+by+Tamax+and+AI+Triforce!;" alt="Raphton and Beltah Project" />
 </h1>
- 
 
 <h3 align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1500&color=00FF66&center=true&vCenter=true&width=1000&lines=⚡+Powered+by+Ishaq+Ibrahim+BELTAH" alt="Ishaq Ibrahim and BELTAH Typing" />
@@ -16,26 +15,29 @@
 ---
 
 <h2 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&duration=3000&pause=1200&color=E4405F&center=true&vCenter=true&width=900&lines=📸+Follow+Me+On+Instagram+@TOXIC._A.N.T OR @Raph Muguna" alt="Follow on Instagram Animation" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&duration=3000&pause=1200&color=E4405F&center=true&vCenter=true&width=900&lines=📸+Follow+Me+On+Instagram+@TOXIC._A.N.T+OR+@Raph+Muguna" alt="Follow on Instagram Animation" />
 </h2>
+
+---
+
 ### 👋🏽 What’s B.E.L.T.A.H?
 
-> **B.E.L.T.A.H** is your smart street bot 🤖  
-> Mix of Swahili slang, ChatGPT AI, and offline power 💯  
+> **B.E.L.T.A.H** is your street-smart bot 🤖  
+> Blended with Swahili slang, ChatGPT intelligence, and full offline power 💯  
 > Built to run on Termux or Tamax – No laptop needed!  
-> 🔐 Bot locked to owner: `+254741819582`
+> 🔐 Fully locked to owner: `+254741819582`
 
 ---
 
 ### ⚙️ FEATURES
 
-- 🧠 Smart AI Chat (Sheng’ + Hinglish + Emoji)  
-- 😍 Modes: Romantic, Polite, Savage, IGIMO  
-- 🖼️ Image tools + Stickers (via GIMP)  
-- 🔐 Locked to your WhatsApp number  
-- 👑 Group admin tools (kick, promote, mute)  
-- 📴 Offline via Tamax or Termux  
-- 🧬 Powered by: Gminae → CrewDrew → **CHATGPT**
+- 🧠 **AI-Powered Chat** (Hinglish, Swahili slang, emojis)  
+- 😍 **Modes**: Romantic, Polite, Savage, IGIMO  
+- 🖼️ **Media Tools**: GIMP-powered stickers, images  
+- 👑 **Group Admin**: Kick, promote, mute, anti-spam  
+- 🔐 **Private Lock**: Number-locked to you  
+- 📴 **Offline Ready**: Works on Tamax/Termux  
+- 🧬 **AI Engine**: Gminae → CrewDrew → ChatGPT (final output)
 
 ---
 
@@ -43,25 +45,25 @@
 
 #### 📲 TERMUX METHOD
 
-- 📥 Install Termux from Play Store  
-- 🧰 Inside Termux: install Node.js & Git  
-- 🔽 Download the `BeltahBot-MD` folder  
-- ⚙️ Open folder and install dependencies  
-- 📸 Scan the WhatsApp QR code to start
+1. 📥 Download **Termux** from Play Store  
+2. 🧰 Run Termux and install Git + Node.js  
+3. 🔽 Clone the `BeltahBot-MD` repo  
+4. ⚙️ Install all dependencies (`npm install`)  
+5. 📸 Scan WhatsApp QR to connect
 
-✅ That’s it! Beltah is running.
+✅ Boom! Beltah is now running.
 
 ---
 
-#### 📱 TAMAX METHOD (No Laptop)
+#### 📱 TAMAX METHOD (NO LAPTOP NEEDED)
 
-- 📲 Download the **Tamax App**  
-- 📂 Upload `BeltahBot-MD` into Tamax  
-- 🖥️ Open Tamax Terminal  
-- ⚙️ Install & run the bot inside  
-- 📸 Scan the QR to activate WhatsApp
+1. 📲 Install the **Tamax App**  
+2. 📂 Upload your `BeltahBot-MD` project  
+3. 🖥️ Open Tamax Terminal  
+4. ⚙️ Install deps and run `node index.js`  
+5. 📸 Scan QR to activate WhatsApp
 
-✅ You’re live with BeltahBot — offline & smart!
+✅ You’re live — Beltah is ready to vibe!
 
 ---
 
@@ -76,9 +78,9 @@
 
 ### ⚖️ LICENSE
 
-- MIT License  
-- Author: Ishaq Ibrahim  
-- © 2025 BeltahBot-MD
+- License: MIT  
+- Author: **Ishaq Ibrahim**  
+- © 2025 **BeltahBot-MD**
 
 ---
 
