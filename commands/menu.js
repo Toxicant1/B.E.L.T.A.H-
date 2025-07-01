@@ -2,6 +2,7 @@
 const config = require('../config');
 const getLang = require('../settings/language');
 const fs = require('fs');
+const path = require('path');
 const lang = getLang(config.language);
 const delay = (ms = 500) => new Promise((res) => setTimeout(res, ms));
 
@@ -13,7 +14,7 @@ const menuCommand = async (sock, msg) => {
     await delay(400);
   }
 
-  // ✅ Step 1: Play the intro audio before menu
+  // ✅ Step 1: Play intro audio
   const introPath = './media/menu-song.ogg';
   if (fs.existsSync(introPath)) {
     await sock.sendMessage(from, {
@@ -21,67 +22,68 @@ const menuCommand = async (sock, msg) => {
       mimetype: 'audio/ogg',
       ptt: false
     }, { quoted: msg });
-    await delay(1200); // Delay after audio to give time before menu
-  } else {
-    console.warn('⚠️ Intro music not found at:', introPath);
+    await delay(1200);
   }
 
-  // ✅ Step 2: Send the decorated menu text
+  // ✅ Step 2: Generate menu caption
   const status = (v) => v ? '✅ ON' : '❌ OFF';
-  const menuText = `
-╔══════════════════════════════════╗
-║         🎉 𝗕.𝗘.𝗟.𝗧.𝗔.𝗛 𝗠𝗘𝗡𝗨 🎉         ║
-╠══════════════════════════════════╣
-║ 👑 𝗢𝘄𝗻𝗲𝗿: ${config.ownerName}
-║ 🔐 𝗟𝗼𝗰𝗸𝗲𝗱 𝘁𝗼: wa.me/${config.ownerNumber.replace('+', '')}
-║ ⚙️ 𝗠𝗼𝗱𝗲: ${status(config.public)}
-║ 🤖 𝗔𝗜: ${status(config.aiEnabled)} (${config.aiEngine.toUpperCase()})
-║ 👁️ 𝗔𝘂𝘁𝗼-𝗦𝘁𝗮𝘁𝘂𝘀: ${status(config.autoViewStatus)}
-║ 🛡️ 𝗔𝗻𝘁𝗶-𝗗𝗲𝗹𝗲𝘁𝗲: ${status(config.antiDelete)}
-╚══════════════════════════════════╝
+  const menuCaption = `
+╔══════════════════════════════╗
+║ 🎉 ${config.botName.toUpperCase()} MENU 🎉
+╠══════════════════════════════╣
+👑 Owner: ${config.ownerName}
+🔐 Locked to: wa.me/${config.ownerNumber.replace('+', '')}
+⚙️ Mode: ${status(config.public)}
+🤖 AI: ${status(config.aiEnabled)} (${config.aiEngine.toUpperCase()})
+👁️ Auto-Status: ${status(config.autoViewStatus)}
+🛡️ Anti-Delete: ${status(config.antiDelete)}
+╚══════════════════════════════╝
 
-╔═══ 🎵 𝗠𝗨𝗦𝗜𝗖 𝗣𝗟𝗔𝗬𝗘𝗥 ════════════════╗
-║ • .play [song]
-║ • .yta [url]
-║ • .ytv [url]
-║ • .lyrics [song]
-║ • .shazam [reply audio]
-╚══════════════════════════════════╝
+🎵 MUSIC:
+• .play [song]
+• .yta [url]
+• .ytv [url]
+• .lyrics [song]
+• .shazam [reply audio]
 
-╔═══ 🧠 𝗔𝗜 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 ═════════════════╗
-║ • .chat [msg]     – ${lang.aiChat}
-║ • .romantic [msg] – ${lang.aiRomantic}
-║ • .swahili [msg]  – ${lang.aiSwahili}
-╚══════════════════════════════════╝
+🧠 AI COMMANDS:
+• .chat [msg] – ${lang.aiChat}
+• .romantic [msg] – ${lang.aiRomantic}
+• .swahili [msg] – ${lang.aiSwahili}
 
-╔═══ 🎯 𝗙𝗨𝗡 𝗭𝗢𝗡𝗘 ══════════════════════╗
-║ • .truth – ${lang.funTruth}
-║ • .dare  – ${lang.funDare}
-╚══════════════════════════════════╝
+🎯 FUN ZONE:
+• .truth – ${lang.funTruth}
+• .dare  – ${lang.funDare}
 
-╔═══ ⚙️ 𝗚𝗘𝗡𝗘𝗥𝗔𝗟 ══════════════════════╗
-║ • .ping  – ${lang.genPing}
-║ • .menu  – ${lang.genMenu}
-║ • .owner – ${lang.genOwner}
-╚══════════════════════════════════╝
+⚙️ GENERAL:
+• .ping  – ${lang.genPing}
+• .menu  – ${lang.genMenu}
+• .owner – ${lang.genOwner}
 
-╔═══ 🎨 𝗠𝗘𝗗𝗜𝗔 𝗧𝗢𝗢𝗟𝗦 ═════════════════╗
-║ • .sticker     – ${lang.mediaSticker}
-║ • .attp [text] – ${lang.mediaATTP}
-╚══════════════════════════════════╝
+🎨 MEDIA TOOLS:
+• .sticker     – ${lang.mediaSticker}
+• .attp [text] – ${lang.mediaATTP}
 
-╔═══ 🔒 𝗔𝗗𝗠𝗜𝗡 𝗢𝗡𝗟𝗬 ══════════════════╗
-║ • .kick @user – ${lang.adminKick}
-║ • .mute       – ${lang.adminMute}
-║ • .unmute     – ${lang.adminUnmute}
-╚══════════════════════════════════╝
+🔒 ADMIN ONLY:
+• .kick @user – ${lang.adminKick}
+• .mute       – ${lang.adminMute}
+• .unmute     – ${lang.adminUnmute}
 
-📅 *Date:* ${new Date().toLocaleDateString()}
-🕒 *Time:* ${new Date().toLocaleTimeString()}
-🔖 *Powered by:* Beltah × Knight
+📅 Date: ${new Date().toLocaleDateString()}
+🕒 Time: ${new Date().toLocaleTimeString()}
+🔖 Powered by: ${config.footer}
 `;
 
-  await sock.sendMessage(from, { text: menuText.trim() }, { quoted: msg });
+  // ✅ Step 3: Send image menu or text
+  const bannerPath = './media/beltah-banner.png'; // Or './beltah-banner.png' if outside
+  if (config.menuStyle === 'image' && fs.existsSync(bannerPath)) {
+    await sock.sendMessage(from, {
+      image: fs.readFileSync(bannerPath),
+      caption: menuCaption.trim()
+    }, { quoted: msg });
+  } else {
+    await sock.sendMessage(from, { text: menuCaption.trim() }, { quoted: msg });
+  }
 };
 
 module.exports = menuCommand;
