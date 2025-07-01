@@ -1,10 +1,12 @@
 /**
- * B.E.L.T.A.H – index.js   (Tamax-ready, single-socket edition)
- * Owner   : Ishaq Ibrahim
- * Powered : Beltah × Knight
+ * B.E.L.T.A.H – index.js   (Tamax-ready, multi-user edition)
+ * Project  : RAPHTON and BELTAH's COMP EXPERTS PROJECT
+ * Owner    : Ishaq Ibrahim (Beltah)
+ * Co-Dev   : Raphton Muguna
+ * Powered  : Beltah × Knight
  *
  * FEATURES -------------------------------------------------------
- *  ✓ QR / Pair-code linking (multi-device)
+ *  ✓ QR linking (multi-device, unrestricted)
  *  ✓ Auto-reconnect
  *  ✓ Auto-view status updates
  *  ✓ Anti-delete (repost deleted messages)
@@ -20,47 +22,42 @@ const {
   fetchLatestBaileysVersion
 } = require('@whiskeysockets/baileys');
 
-const P   = require('pino');
-const fs  = require('fs');
+const P  = require('pino');
+const fs = require('fs');
 
 // --------------------------------------------------
-// 1️⃣  CONFIG – edit here only if you must
+// 1️⃣  CONFIG
 // --------------------------------------------------
-const SESSION_FOLDER = './session';
-const BOT_NUMBER_E164 = process.env.BELTAH_PHONE || '254741819582';   // keep E.164, no '+'
-const LOG_LEVEL = 'silent';   // change to 'info' for verbose logs
-const BROWSER_DESCRIPTION = ['BeltahBot', 'Chrome', '3.0'];          // name, agent, v
+const SESSION_FOLDER      = './session';
+const LOG_LEVEL           = 'silent';                 // 'info' for verbose
+const BROWSER_DESCRIPTION = ['BeltahBot', 'Chrome', '3.0'];
 
-// create session dir first run
+// create session dir if not exist
 if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
 // --------------------------------------------------
-// 2️⃣  BOOTSTRAP
+// 2️⃣  BOOTSTRAP SOCKET
 // --------------------------------------------------
 (async () => {
   const { state, saveCreds } = await useMultiFileAuthState(SESSION_FOLDER);
-  const { version } = await fetchLatestBaileysVersion();
+  const { version }          = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
     version,
     logger: P({ level: LOG_LEVEL }),
-    printQRInTerminal: false,              // we prefer Pair-code flow
+    printQRInTerminal: true,          // Show QR code for all users
     auth: state,
     browser: BROWSER_DESCRIPTION,
     markOnlineOnConnect: true
   });
 
-  // keep creds fresh
+  // keep session saved
   sock.ev.on('creds.update', saveCreds);
 
   // ------------------------------------------------
   // 3️⃣  CONNECTION EVENTS
   // ------------------------------------------------
-  let pairingTried = false;
-
-  sock.ev.on('connection.update', async (u) => {
-    const { connection, lastDisconnect } = u;
-
+  sock.ev.on('connection.update', async ({ connection, lastDisconnect }) => {
     if (connection === 'connecting') {
       console.log('⏳ Connecting to WhatsApp …');
     }
@@ -70,25 +67,8 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
     if (connection === 'close') {
       const code = lastDisconnect?.error?.output?.statusCode;
       const willReconnect = code !== DisconnectReason.loggedOut;
-      console.log(`❌ Connection lost (code ${code}). Reconnect: ${willReconnect}`);
-      if (willReconnect) return (await delay(2_000), sock.ws.close());   // triggers auto-restart via pm2/node
-    }
-
-    // first-run pair-code
-    if (connection === 'connecting'
-        && !sock.authState.creds.registered
-        && !pairingTried) {
-      pairingTried = true;
-      try {
-        console.log('🔑 Generating pair code …');
-        const code = await sock.requestPairingCode(BOT_NUMBER_E164);
-        if (code) {
-          console.log(`\n📲  Pairing Code:  ${code}\n`);
-          console.log('👉  WhatsApp ► Linked Devices ► Enter Code\n');
-        }
-      } catch (e) {
-        console.error('Failed to get pair-code:', e.message);
-      }
+      console.log(`❌ Connection closed (code: ${code}). Reconnect: ${willReconnect}`);
+      if (willReconnect) return (await delay(2000), sock.ws.close());
     }
   });
 
@@ -129,23 +109,22 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
   });
 
   // ------------------------------------------------
-  // 6️⃣  COMMAND HANDLER  (very small – extend later)
+  // 6️⃣  COMMAND HANDLER
   // ------------------------------------------------
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0];
     if (!m || m.key.fromMe || m.key.remoteJid === 'status@broadcast') return;
 
-    const from  = m.key.remoteJid;
-    const text  =
-      m.message?.conversation
-      || m.message?.extendedTextMessage?.text
-      || m.message?.imageMessage?.caption
-      || ''
-    ;
+    const from = m.key.remoteJid;
+    const text =
+      m.message?.conversation ||
+      m.message?.extendedTextMessage?.text ||
+      m.message?.imageMessage?.caption ||
+      '';
 
     const cmd = text.trim().toLowerCase();
 
-    // show typing before heavy replies
+    // show typing indicator
     await sock.sendPresenceUpdate('composing', from);
 
     // --- ping
@@ -153,12 +132,13 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
       return sock.sendMessage(from, { text: '🏓 Pong! Beltah alive 😎' });
     }
 
-    // --- AI ask
+    // --- AI placeholder
     if (cmd.startsWith('ask ') || cmd.startsWith('beltah ')) {
       const q = text.replace(/^ask |^beltah /i, '');
       await sock.sendMessage(from, { text: '🤖 (ChatGPT placeholder) …' });
 
-      /* Example real call:
+      /*
+      // In future:
       const answer = await chatgpt(q);
       return sock.sendMessage(from, { text: answer });
       */
@@ -172,4 +152,4 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 // --------------------------------------------------
 function delay(ms) {
   return new Promise((r) => setTimeout(r, ms));
-                                 }
+             }
