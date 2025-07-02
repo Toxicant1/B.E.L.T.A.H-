@@ -20,7 +20,7 @@ const askChatGPT = async (prompt) => {
     return res.data.choices[0].message.content.trim();
   } catch (err) {
     console.error('❌ ChatGPT error:', err?.response?.data || err.message);
-    return "😔 Samahani, kuna shida na ChatGPT response.";
+    return "😔 Pole sana, kuna shida na ChatGPT sasa hivi.";
   }
 };
 
