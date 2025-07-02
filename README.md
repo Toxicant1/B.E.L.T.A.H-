@@ -1,102 +1,91 @@
+<h1 align="center" style="font-size: 36px; font-weight: bold;">
+  🌈 <span style="color: #ff0066">RAPHTON</span> & <span style="color: #00ccff">ISHAQ</span>'S COMPUTER EXPERT PROJECT
+</h1>
 
-<h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&pause=1000&center=true&vCenter=true&width=1000&height=80&lines=🌈+Raphton+%26+Ishaq's+Computer+Experts+Project;🔥+Powered+by+ChatGPT+AI+and+Tamax;" alt="Project Banner Animation" />
-</h1><h3 align="center"><strong>Maintainers of BeltahBot-MD</strong></h3>
-<p align="center"><i>Project by Raphton Muguna & Ishaq Ibrahim</i></p><p align="center">
-  <img src="https://github.com/Toxicant1/B.E.L.T.A.H-/blob/main/beltah-banner.png?raw=true" width="100%" alt="BeltahBot Banner" />
+<h2 align="center" style="font-size: 28px; font-weight: bold; color: #00ff99;">
+  💥 POWERED BY CHATGPT × GMINAE × CREWDREW 💥
+</h2>
+
+<p align="center"><strong>Maintainers of BeltahBot-MD</strong></p>
+<p align="center"><i>Built by 🇰🇪 Raphton Muguna & Ishaq Ibrahim</i></p>
+
+<p align="center">
+  <img src="https://github.com/Toxicant1/B.E.L.T.A.H-/blob/main/beltah-banner.png?raw=true" width="95%" alt="BeltahBot Banner" />
 </p>
----
-
-💡 What's B.E.L.T.A.H?
-
-B.E.L.T.A.H is not your average WhatsApp bot.
-It's street-smart 🤖, emoji-friendly 😎, and talks like your best buddy.
-Built for offline Android life — no need for a laptop.
-Just install, scan, and vibe with full ChatGPT power inside.
-
 
 ---
 
-🔥 Key Features
+## 💡 What is B.E.L.T.A.H?
 
-🧠 AI Chat (Sheng', Romantic, Savage, etc)
-
-🎵 Music Tools (.play, .yta, .ytv, lyrics, shazam)
-
-🖼️ Stickers, Image Text (ATTP)
-
-👑 Admin Commands (Kick, mute, delete protect)
-
-👁️ Auto View Status (emoji-based reactions)
-
-🔐 Owner and Developer Access
-
-🚀 Powered by Tamax, Gminae, CrewDrew, and ChatGPT
-
-
+B.E.L.T.A.H is your **digital homie on WhatsApp** 💬  
+It vibes in Sheng’, drops emojis 😎, plays music 🎵, and chats like your bestie  
+Made for Android, runs fully offline with **Tamax or Termux**  
+Powered by **real AI** – no stress, no laptop needed.
 
 ---
 
-📲 How To Use It
+## 🌟 Coolest Features
 
-Termux Setup (Simple Way)
-• Install Termux from Play Store
-• Clone this repo using GitHub
-• Run setup → Scan QR → Start the bot
-• You’re done. Beltah goes live!
-
-Tamax Setup (Offline Mobile Method)
-• Download Tamax
-• Upload the bot folder
-• Open terminal, install and run
-• Scan QR code and chill
-
+- 🤖 ChatGPT replies in slang, romance, IGIMO, etc  
+- 🎶 Music downloader (.play, .yta, .ytv, lyrics, shazam)  
+- 🎨 Media tools (ATTP, sticker maker, GIMP)  
+- 👁️ Auto-View Status with fun emoji reactions  
+- 🔐 Anti-delete & admin-only protections  
+- 🛠️ Group tools (kick, promote, spam lock)  
+- 💚 AI Stack: Gminae → CrewDrew → ChatGPT  
+- ✅ Tamax & Termux supported – offline life!
 
 ---
 
-👥 Team Behind Beltah
+## 🚀 How to Start (Hakuna Stress)
 
-Main Dev: Ishaq Ibrahim
-Co-Dev: Raphton Muguna
+### Termux (Android Users)
 
-📞 Contact:
+1. Download Termux app 📲  
+2. Clone this repo from GitHub  
+3. Install with `npm install`  
+4. Start bot → scan your WhatsApp QR
 
-WhatsApp: +254741819582 (Ishaq)
+✅ You’re now live with Beltah!
 
-WhatsApp: +254743689554 (Raphton)
+---
 
+### Tamax Method (Best for Mobile)
+
+1. Download Tamax from Play Store  
+2. Upload this bot folder  
+3. Run in terminal → scan QR → GO LIVE!  
+4. Bot stays awake offline ⚡
+
+---
+
+## 👑 Team Behind This Project
+
+**Main Developer** – Ishaq Ibrahim  
+**Co-Dev & System Design** – Raphton Muguna
+
+📞 Contact WhatsApp:
+- [`+254741819582`](https://wa.me/254741819582) — Ishaq  
+- [`+254743689554`](https://wa.me/254743689554) — Raphton
 
 📧 Emails:
-
-ishaq78ibrahim@gmail.com
-
-isaac0maina@gmail.com
-
-raphtonmuguna@gmail.com
-
+- ishaq78ibrahim@gmail.com  
+- isaac0maina@gmail.com  
+- raphtonmuguna@gmail.com
 
 📸 Instagram:
-
-@toxic._.a.n.t
-
-@raph.muguna
-
-
+- [@toxic._.a.n.t](https://instagram.com/toxic._.a.n.t)  
+- [@raph.muguna](https://instagram.com/raph.muguna)
 
 ---
 
-🛡️ License & Credits
+## 🛡️ License & Vibe Credit
 
-This bot is free for everyone to enjoy.
-MIT Licensed, built for the streets and powered by love 🫶
-© 2025 — Ishaq & Raphton, for Kenya 🇰🇪
-
+- MIT License – use freely, share vibes 💫  
+- Project by **BeltahBot-MD Team**  
+- For the streets 🇰🇪, from hearts 💚
 
 ---
 
-> “Hii si bot ya kawaida – iko na akili, iko na roho, iko na style.”
-– Enjoy B.E.L.T.A.H: ChatGPT brain, Swahili heart, Tamax body 💚
-
-
-
-
+> “_Hii si bot ya kawaida – iko na akili, iko na roho, iko na Beltah._”  
+> ChatGPT brain 🧠 + Swahili heart ❤️ + Offline muscle 🔋
