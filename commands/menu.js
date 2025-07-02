@@ -13,7 +13,7 @@ const menuCommand = async (sock, msg) => {
     await delay(400);
   }
 
-  // ✅ Step 1: Play intro audio
+  // 🔊 Step 1: Play intro audio
   const introPath = './media/menu-song.ogg';
   if (fs.existsSync(introPath)) {
     await sock.sendMessage(from, {
@@ -24,64 +24,64 @@ const menuCommand = async (sock, msg) => {
     await delay(1200);
   }
 
-  // ✅ Step 2: Build fancy menu text
+  // 🧾 Step 2: Build styled menu
   const status = (v) => v ? '✅ ON' : '❌ OFF';
   const menuCaption = `
 ╔════════════════════════════════╗
-║     🎉 ${config.botName.toUpperCase()} COMMAND MENU 🎉     ║
+║     🧠 ${config.botName.toUpperCase()} - COMMANDS 🧠     ║
 ╠════════════════════════════════╣
-👑 *Owner:* ${config.ownerName}
-👨‍💻 *Core Dev:* ${config.coreDeveloper || 'Raph Muguna'}
-🔐 *Locked to:* wa.me/${config.ownerNumber.replace('+', '')}
-⚙️ *Mode:* ${status(config.public)}
+👑 *Boss:* ${config.ownerName}
+👨‍💻 *Core Dev:* ${config.coreDevName}
+🔐 *Number Lock:* wa.me/${config.ownerNumber}
+⚙️ *Public Mode:* ${status(config.public)}
 🤖 *AI Engine:* ${status(config.aiEnabled)} (${config.aiEngine.toUpperCase()})
-👁️ *Auto-Status View:* ${status(config.autoViewStatus)}
-🛡️ *Anti-Delete:* ${status(config.antiDelete)}
+👀 *Auto View Status:* ${status(config.autoViewStatus)}
+🗑️ *Anti-Delete:* ${status(config.antiDelete)}
 ╚════════════════════════════════╝
 
-╔═ 🎵 𝗠𝗨𝗦𝗜𝗖 𝗣𝗟𝗔𝗬𝗘𝗥 ═╗
-║ • .play [song]
-║ • .yta [url]
-║ • .ytv [url]
-║ • .lyrics [song]
-║ • .shazam [reply audio]
+╔═ 🎶 𝗠𝗨𝗦𝗜𝗖 𝗕𝗟𝗢𝗖𝗞 ═╗
+║ • .play [song]         – Tafuta ngoma moja safi
+║ • .yta [yt-link]       – Download audio
+║ • .ytv [yt-link]       – Download video
+║ • .lyrics [title]      – Pata mistari ya ngoma
+║ • .shazam [reply audio]– Tambua jina ya ngoma
 ╚═════════════════════════╝
 
-╔═ 🧠 𝗔𝗜 / 𝗖𝗛𝗔𝗧𝗕𝗢𝗧 ═╗
-║ • .chat [msg] – ${lang.aiChat}
-║ • .romantic [msg] – ${lang.aiRomantic}
-║ • .swahili [msg]  – ${lang.aiSwahili}
+╔═ 💬 𝗔𝗜 𝗖𝗛𝗔𝗧𝗕𝗢𝗧 ═╗
+║ • .chat [msg]          – ${lang.aiChat || "Chat na Beltah AI 🧠"}
+║ • .romantic [msg]      – ${lang.aiRomantic || "Maneno tamu kwa warembo 💘"}
+║ • .swahili [msg]       – ${lang.aiSwahili || "Chat ya Kiswahili Gen Z 🇰🇪"}
 ╚═════════════════════════╝
 
-╔═ 🎯 𝗙𝗨𝗡 𝗭𝗢𝗡𝗘 ═╗
-║ • .truth – ${lang.funTruth}
-║ • .dare  – ${lang.funDare}
+╔═ 🎭 𝗙𝗨𝗡 𝗭𝗢𝗡𝗘 ═╗
+║ • .truth               – ${lang.funTruth || "Swali la ukweli 🔍"}
+║ • .dare                – ${lang.funDare || "Changamoto moto 🔥"}
 ╚════════════════════╝
 
 ╔═ ⚙️ 𝗚𝗘𝗡𝗘𝗥𝗔𝗟 ═╗
-║ • .ping     – ${lang.genPing}
-║ • .menu     – ${lang.genMenu}
-║ • .owner    – ${lang.genOwner}
-║ • .restart  – ♻️ Restart bot
+║ • .ping                – ${lang.genPing || "Beltah iko radar? 📡"}
+║ • .menu                – ${lang.genMenu || "Onyesha menu yote 📜"}
+║ • .owner               – ${lang.genOwner || "Pata info ya owner 👑"}
+║ • .restart             – ♻️ Restart bot (kwa admin tu)
 ╚════════════════════╝
 
-╔═ 🎨 𝗠𝗘𝗗𝗜𝗔 𝗧𝗢𝗢𝗟𝗦 ═╗
-║ • .sticker     – ${lang.mediaSticker}
-║ • .attp [text] – ${lang.mediaATTP}
+╔═ 🖼️ 𝗠𝗘𝗗𝗜𝗔 𝗧𝗢𝗢𝗟𝗦 ═╗
+║ • .sticker             – ${lang.mediaSticker || "Tengeneza sticker haraka 🎨"}
+║ • .attp [text]         – ${lang.mediaATTP || "Andika text kwa emoji format 🌀"}
 ╚════════════════════╝
 
-╔═ 🔒 𝗔𝗗𝗠𝗜𝗡 𝗢𝗡𝗟𝗬 ═╗
-║ • .kick @user – ${lang.adminKick}
-║ • .mute       – ${lang.adminMute}
-║ • .unmute     – ${lang.adminUnmute}
+╔═ 🛡️ 𝗔𝗗𝗠𝗜𝗡 𝗢𝗡𝗟𝗬 ═╗
+║ • .kick @user          – ${lang.adminKick || "Toa mtu nje ya group 👟"}
+║ • .mute                – ${lang.adminMute || "Tuliza group kabisa 🤐"}
+║ • .unmute              – ${lang.adminUnmute || "Fungua group tena 🗣️"}
 ╚════════════════════╝
 
-📅 *Date:* ${new Date().toLocaleDateString()}
+📆 *Date:* ${new Date().toLocaleDateString()}
 🕒 *Time:* ${new Date().toLocaleTimeString()}
 🔖 *Powered by:* ${config.footer}
   `.trim();
 
-  // ✅ Step 3: Send menu (image or text)
+  // 🖼️ Step 3: Send menu (image/text mode)
   const bannerPath = './media/beltah-banner.png';
   if (config.menuStyle === 'image' && fs.existsSync(bannerPath)) {
     await sock.sendMessage(from, {
