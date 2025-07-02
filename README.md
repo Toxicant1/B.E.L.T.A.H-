@@ -1,13 +1,9 @@
-<h1 align="center" style="font-size: 36px; font-weight: bold;">
-  🌈 <span style="color: #ff0066">RAPHTON</span> & <span style="color: #00ccff">ISHAQ</span>'S COMPUTER EXPERT PROJECT
+<h1 align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&duration=4500&pause=1500&color=0AFFB5&center=true&vCenter=true&width=1200&lines=🌈+Raphton+%26+Ishaq's+Computer+Expert+Project;🔥+Powered+by+ChatGPT+×+Gminae+×+CrewDrew" alt="Typing Animation Banner" />
 </h1>
 
-<h2 align="center" style="font-size: 28px; font-weight: bold; color: #00ff99;">
-  💥 POWERED BY CHATGPT × GMINAE × CREWDREW 💥
-</h2>
-
-<p align="center"><strong>Maintainers of BeltahBot-MD</strong></p>
-<p align="center"><i>Built by 🇰🇪 Raphton Muguna & Ishaq Ibrahim</i></p>
+<h3 align="center"><strong>Maintainers of BeltahBot-MD</strong></h3>
+<p align="center"><i>Project by Raphton Muguna & Ishaq Ibrahim</i></p>
 
 <p align="center">
   <img src="https://github.com/Toxicant1/B.E.L.T.A.H-/blob/main/beltah-banner.png?raw=true" width="95%" alt="BeltahBot Banner" />
