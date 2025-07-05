@@ -1,88 +1,144 @@
-h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=36&pause=1000&color=00FF00&center=true&vCenter=true&width=1000&lines=🇰🇪+Beltah+WhatsApp+Bot;✨+Built+by+Rafton+%26+Ishaq;🧠+Powered+by+ChatGPT-AI" alt="Beltah Typing Animation" />
+
+<h1 align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=34&duration=3000&pause=1500&color=00BB00&center=true&vCenter=true&width=1000&lines=🇰🇪+Beltah+WhatsApp+Bot;Powered+by+Raphton+%26+Ishaq;Main+Brain:+ChatGPT+AI">
 </h1>
 
 <p align="center">
   <img src="https://github.com/Toxicant1/B.E.L.T.A.H-/blob/main/media/beltah-banner.png?raw=true" width="100%" alt="BeltahBot Banner" />
 </p>
 
----
-
-<h2>
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&pause=1000&color=F75C00&width=600&lines=🌟+What+is+Beltah%3F" alt="What is Beltah" />
-</h2>
-
-**B.E.L.T.A.H** is an advanced offline WhatsApp bot built with love in Kenya 🇰🇪.  
-No PC needed — just install and enjoy it on Android with Tamax or TalkDrove.
+<p align="center">
+  <img alt="Version" src="https://img.shields.io/badge/version-3.0-green" />
+  <img alt="License" src="https://img.shields.io/github/license/Toxicant1/B.E.L.T.A.H-" />
+  <img alt="Status" src="https://img.shields.io/badge/Bot-Active-brightgreen" />
+  <img alt="Powered" src="https://img.shields.io/badge/AI-ChatGPT-blueviolet" />
+</p>
 
 ---
 
 <h2>
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&pause=1000&color=F75C00&width=600&lines=🚀+Key+Features" alt="Key Features" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=F75C00&width=500&lines=✨+What+is+BeltahBot%3F" />
 </h2>
 
-- 💬 Smart AI Chat (ChatGPT powered)
-- 🎶 Music commands: `.play`, `.yta`, `.ytv`, `.lyrics`, `.shazam`
-- 🎨 Sticker & ATTP generation
-- 🛡️ Admin tools: Kick, Mute, Auto-Delete, Auto-Status View
-- 🧠 AI Engine Stack: Gminae → CrewDrew → ChatGPT
-- 📴 Fully offline support (Tamax/Termux/TalkDrove)
+**B.E.L.T.A.H** is your all-in-one AI WhatsApp bot built for fun, smart convos, music, and media tools.  
+Made with ❤️ by Kenyan devs, but open to the whole world 🌍
+
+- 🧠 Chat with AI (Kiswahili, English, Romantic, Savage)
+- 🎵 Play and download music/videos
+- 🎨 Create stickers & emoji animations
+- 💬 Works offline on Android with Tamax or online via TalkDrove
 
 ---
 
 <h2>
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&pause=1000&color=F75C00&width=600&lines=📲+Install+Options" alt="Install Options" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=F75C00&width=500&lines=🚀+Key+Features" />
 </h2>
 
-### ✅ Option 1 – **Tamax / Termux**
-
-1. Download **Tamax** or **Termux** app on your Android
-2. Open terminal and type:
-
-pkg install nodejs git git clone https://github.com/Toxicant1/B.E.L.T.A.H- cd B.E.L.T.A.H- npm install node index.js
+- 🤖 **AI Chatbot**: Hinglish, Sheng', Swahili, Romantic
+- 🎵 **Music Tools**: `.play`, `.yta`, `.ytv`, `.lyrics`, `.shazam`
+- 🎨 **Media**: `.sticker`, `.attp`
+- 👀 **Auto View Status**, 🛡️ **Anti-Delete**
+- 🔐 Optional lock to owner (changeable)
+- 📦 100% Android-ready (no laptop needed)
+- ⚙️ Runs via Tamax or TalkDrove hosting
 
 ---
 
 <h2>
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&pause=1000&color=F75C00&width=600&lines=🎥+Deployment+Video+Tutorials" alt="Deployment Videos" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=F75C00&width=500&lines=📲+Install+Options" />
 </h2>
 
-Watch step-by-step YouTube tutorials:
+### 📦 OPTION 1: **Install via Tamax (Offline Android)**
 
-- 📺 [Deploy BeltahBot using **Termux/Tamax**](https://www.youtube.com/watch?v=KPCXAH09zTA)  
-- 📺 [Deploy BeltahBot using **TalkDrove**](https://www.youtube.com/watch?v=Y16znt_cU2w)
+1. Install **Tamax Terminal** from Play Store  
+2. Upload Beltah folder to Tamax  
+3. Run:
+```bash
+npm install
+node index.js
+
+4. Scan the WhatsApp QR code from your device
+✅ You're done. Beltah iko live!
+
+
+
+
+---
+
+🌐 OPTION 2: Deploy on TalkDrove (Online Hosting)
+
+Open TalkDrove.com and create account
+
+Upload the project files
+
+Run npm install
+
+Start the bot: node index.js
+✅ Copy QR from logs and pair with WhatsApp
+
+
 
 ---
 
 <h2>
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&pause=1000&color=F75C00&width=600&lines=👥+Team+Behind+Beltah" alt="Team Behind" />
-</h2>
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=F75C00&width=500&lines=🎥+Deployment+Videos" />
+</h2>🧑‍💻 Watch these step-by-step video guides on YouTube:
 
-| Role        | Name                   |
-|-------------|------------------------|
-| 🧠 Lead Dev | Ishaq Ibrahim (Beltah) |
-| 🤝 Co-Dev   | Rafton Muguna          |
+🔧 Deploy via Tamax (Android)
 
-### 📞 Contacts:
-- WhatsApp: [`+254741819582`](https://wa.me/254741819582) – Ishaq  
-- WhatsApp: [`+254743689554`](https://wa.me/254743689554) – Rafton  
-- Emails:  
-  - `ishaq78ibrahim@gmail.com`  
-  - `isaac0maina@gmail.com`  
-  - `raphtonmuguna@gmail.com`
+☁️ Deploy via TalkDrove Hosting
+
+
 
 ---
 
 <h2>
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&pause=1000&color=F75C00&width=600&lines=🛡️+License+%26+Credits" alt="License" />
-</h2>
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=F75C00&width=500&lines=👥+Team+Behind+Beltah" />
+</h2>Role	Name
 
-- MIT License  
-- Project maintained by Ishaq & Rafton  
-- 🇰🇪 Made with 💚 in Kenya, 2025  
-- Powered by Tamax, TalkDrove, and ChatGPT AI
+🧠 Lead Dev	Ishaq Ibrahim (Beltah)
+🤝 Core Dev	Raphton Muguna
+
+
+📞 WhatsApp Contacts
+
++254741819582 – Ishaq
+
++254743689554 – Raphton
+
+
+📧 Emails
+
+ishaq78ibrahim@gmail.com
+
+raphtonmuguna@gmail.com
+
+
+📸 Instagram
+
+@toxic._.a.n.t
+
+@raph.muguna
+
+
 
 ---
 
-> 🔥 Beltah is clean, powerful, and offline-ready.  
-> 🎉 Build your vibe – control WhatsApp like a boss.
+<h2>
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=F75C00&width=500&lines=🛡️+License+%26+Credits" />
+</h2>MIT Licensed
+
+Powered by ChatGPT + CrewDrew + Gminae
+
+Made with ❤️ in Kenya 🇰🇪
+
+Designed to make WhatsApp fun again
+
+
+
+---
+
+> 🌍 Beltah isn’t just a bot — it’s your vibing digital assistant
+🇰🇪 Locally made. Globally useful.
+💬 Welcome to the new age of smart chatting.
+
