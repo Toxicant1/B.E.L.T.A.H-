@@ -66,7 +66,9 @@
 ---
 
 🎬 **Watch Deployment Tutorial on YouTube**  
-📺 [Click here to watch how to deploy BeltahBot on TalkDrove](https://youtube.com)  
+📺 How to Deploy a WhatsApp Bot using Termux – Full Guide
+Deploy WhatsApp Bot Gifted-Md on TalkDrove
+ 
 *👉 You can replace the above link with your own video tutorial*
 
 ---
