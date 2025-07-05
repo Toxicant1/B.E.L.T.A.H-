@@ -5,6 +5,9 @@ const path = require('path');
 const lang = getLang(config.language);
 const delay = (ms = 500) => new Promise((res) => setTimeout(res, ms));
 
+const PLATFORM = process.env.PLATFORM || 'tamax';
+const IS_TAMAX = PLATFORM === 'tamax';
+
 const menuCommand = async (sock, msg) => {
   const from = msg.key.remoteJid;
 
@@ -13,18 +16,18 @@ const menuCommand = async (sock, msg) => {
     await delay(400);
   }
 
-  // ✅ Step 1: Play intro audio
-  const introPath = './media/menu-song.ogg';
-  if (fs.existsSync(introPath)) {
+  // ✅ Step 1: Play intro audio (only on Tamax/local)
+  const introPath = './media/assets_beltah_intro.mp3';
+  if (IS_TAMAX && fs.existsSync(introPath)) {
     await sock.sendMessage(from, {
       audio: fs.readFileSync(introPath),
-      mimetype: 'audio/ogg',
+      mimetype: 'audio/mp4',
       ptt: false
     }, { quoted: msg });
     await delay(1200);
   }
 
-  // ✅ Step 2: Build fancy menu text
+  // ✅ Step 2: Build the menu text
   const status = (v) => v ? '✅ ON' : '❌ OFF';
   const menuCaption = `
 ╔════════════════════════════════╗
@@ -79,9 +82,9 @@ const menuCommand = async (sock, msg) => {
 📅 *Date:* ${new Date().toLocaleDateString()}
 🕒 *Time:* ${new Date().toLocaleTimeString()}
 🔖 *Powered by:* ${config.footer}
-  `.trim();
+`.trim();
 
-  // ✅ Step 3: Send menu (image or text)
+  // ✅ Step 3: Send the menu as image or text
   const bannerPath = './media/beltah-banner.png';
   if (config.menuStyle === 'image' && fs.existsSync(bannerPath)) {
     await sock.sendMessage(from, {
