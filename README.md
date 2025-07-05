@@ -1,108 +1,154 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=40&duration=3500&pause=1500&color=F70000&center=true&vCenter=true&width=1200&lines=💻+Raphton+%26+Ishaq's+Computer+Experts+Project;🔥+Powered+by+ChatGPT+AI+and+TalkDrove!;" alt="Typing Animation" />
-</h1>
-
-<h3 align="center"><strong>Maintainers of BeltahBot-MD</strong></h3>
-<p align="center"><i>Project by Raphton Muguna & Ishaq Ibrahim</i></p>
-
-<p align="center">
+  🤖 <strong>B.E.L.T.A.H – WhatsApp Bot</strong> 🇰🇪  
+</h1><p align="center">
+  <em>Built by <strong>Ishaq Ibrahim</strong> and <strong>Raphton Muguna</strong> – powered by ChatGPT AI, CrewDrew & Gminae.</em>
+</p><p align="center">
   <img src="https://github.com/Toxicant1/B.E.L.T.A.H-/blob/main/beltah-banner.png?raw=true" width="100%" alt="BeltahBot Banner" />
 </p>
+---
+
+💡 What is B.E.L.T.A.H?
+
+B.E.L.T.A.H si bot ya kawaida 😎
+Ni bot ya mtaa — iko na roho, iko na akili, iko na vibe.
+Fully offline, emoji-powered, and AI-driven!
+
+📱 No PC needed – install it directly on Android
+
+💬 ChatGPT-Powered – smart replies in Hinglish, Kiswahili, Sheng'
+
+🔒 Ready for your number or public use – up to you!
+
+
 
 ---
 
-## 💡 What's B.E.L.T.A.H?
+🔥 Key Features
 
-> **B.E.L.T.A.H** isn’t just another WhatsApp bot 😎  
-> It’s AI-powered, emoji-loaded, and ready for any vibe 💬  
-> Works on both Android (offline via Termux/Tamax) or cloud (TalkDrove)  
-> Install it, scan the QR, and you’re good to go.
+🧠 AI Chat Modes: .chat, .romantic, .swahili
 
-> **B.E.L.T.A.H** si bot ya kawaida — iko na akili ya mtaa, iko na roho ya ChatGPT.  
-> Imeundwa kufit kwa masharti ya Kenya na East Africa, lakini inasupport worldwide use 💥
+🎵 Music Tools: .play, .yta, .ytv, .lyrics, .shazam
 
----
+🎨 Media: Stickers, ATTP, Image menus
 
-## 🔥 Key Features / Vipengele Kuu
+👑 Admin Tools: Kick, Mute, Anti-Delete, Auto View Status
 
-- 🧠 **AI Chat** – Hinglish, Sheng', Romantic, Savage moods
-- 🎵 **Music Tools** – `.play`, `.yta`, `.ytv`, `.lyrics`, `.shazam`
-- 🎨 **Media** – Stickers, ATTP, image-based menu
-- 🛡️ **Admin Tools** – Kick, Mute, Anti-Delete, Auto View Status
-- 🤖 **AI Stack** – Gminae → CrewDrew → ChatGPT
-- 👑 Original Creator: Ishaq Ibrahim – wa.me/254741819582  
-- 📴 **Offline & Online Modes** – No PC needed!
+🌐 Deploy on Cloud or Android
+
+🆓 Free to Use & Customize
+
+
 
 ---
 
-## 📲 How to Install / Jinsi ya Kuinstall
+📲 Installation Options
 
-### ✅ OPTION 1: Termux/Tamax (Offline Android)
+✅ Option 1: Install via Termux / Tamax (Offline, Android)
 
-> For Android users who want to run the bot locally — no laptop needed.
+1. Download Termux or Tamax
 
-1. Download **Termux** (Play Store) or **Tamax**
-2. Open terminal and install `nodejs` and `git`
-3. Clone the bot project from GitHub
-4. Run `npm install` to set up
-5. Run `node index.js` and scan the WhatsApp QR code
 
-> 💡 *No need for power banks – Beltah runs on your Android offline.*
+2. Open terminal and run:
 
----
 
-### ✅ OPTION 2: TalkDrove (Cloud Hosting)
 
-> For 24/7 hosting without draining your phone battery.
+pkg install nodejs git -y
+git clone https://github.com/Toxicant1/B.E.L.T.A.H-
+cd B.E.L.T.A.H-
+npm install
+node index.js
 
-1. Create a free account at **TalkDrove**
-2. Upload all BeltahBot files to your project dashboard
-3. Run `npm install` in the cloud terminal
-4. Start with `node index.js`
-5. Scan QR code on WhatsApp under Linked Devices
+3. Scan the WhatsApp code and Beltah will go live 🟢
 
-> ☁️ *Now your bot stays online all the time – no phone needed!*
+
+
 
 ---
 
-🎬 **Watch Deployment Tutorial on YouTube**  
-📺 How to Deploy a WhatsApp Bot using Termux – Full Guide
-Deploy WhatsApp Bot Gifted-Md on TalkDrove
- 
-*👉 You can replace the above link with your own video tutorial*
+☁️ Option 2: Deploy via TalkDrove (Online Hosting)
+
+1. Go to TalkDrove and create an account
+
+
+2. Upload your bot folder
+
+
+3. Make sure to run npm install
+
+
+4. Then start it using node index.js
+
+
+
 
 ---
 
-## 👥 Dev Team / Timu ya Devs
+📺 Deployment Video Tutorials
 
-| Role        | Name                    |
-|-------------|-------------------------|
-| 🧠 Main Dev | Ishaq Ibrahim (Beltah) |
-| 🤝 Co-Dev   | Raphton Muguna          |
+Need help? Watch these step-by-step videos:
 
-### 📞 WhatsApp:
-- [`+254741819582`](https://wa.me/254741819582) – Ishaq  
-- [`+254743689554`](https://wa.me/254743689554) – Raphton  
+🔧 Termux / Tamax Method
+🎬 How to Deploy a WhatsApp Bot using Termux – Full Guide
 
-### 📧 Emails:
-- `ishaq78ibrahim@gmail.com`  
-- `isaac0maina@gmail.com`  
-- `raphtonmuguna@gmail.com`
+☁️ TalkDrove Method
+🎬 Deploy WhatsApp Bot Gifted-Md on TalkDrove
 
-### 📸 Instagram:
-- [@toxic._.a.n.t](https://instagram.com/toxic._.a.n.t) – Ishaq  
-- [@raph.muguna](https://instagram.com/raph.muguna) – Raphton
+
+No confusion, just follow the video and you're good to go!
+
 
 ---
 
-## 🛡️ License & Credits / Leseni na Shukrani
+👥 Team Behind Beltah
 
-- MIT License  
-- 💚 Built in Kenya with vibes & code  
-- ⚙️ Powered by: **Beltah × Knight**
+Role	Name
+
+🧠 Main Dev	Ishaq Ibrahim (Beltah)
+🤝 Co-Dev	Raphton Muguna
+
+
+📞 WhatsApp Contacts:
+
++254741819582 – Ishaq
+
++254743689554 – Raphton
+
+
+📧 Emails:
+
+ishaq78ibrahim@gmail.com
+
+isaac0maina@gmail.com
+
+raphtonmuguna@gmail.com
+
+
+📸 Instagram:
+
+@toxic._.a.n.t – Ishaq
+
+@raph.muguna – Raphton
+
+
 
 ---
 
-> 🧠 “This isn’t just a bot — it’s a vibe, it’s a brain, it’s a street-smart assistant.”  
-> ✨ BeltahBot is here to stay – built for the people, powered by AI  
-> 🥇 You’ve just met your new WhatsApp bestie!
+🛡️ License & Credits
+
+MIT Licensed
+
+💻 Built with 💚 by Ishaq & Raphton
+
+🇰🇪 Made in Kenya, 2025
+
+
+> 🧠 “Hii si bot ya kawaida – iko na akili, iko na roho, iko na style.”
+✨ BeltahBot is for the culture – enjoy the mtaa vibes with every reply!
+
+
+
+
+---
+
+Let me know if you want this in .md format or want to preview how it looks on GitHub. ✅
+
