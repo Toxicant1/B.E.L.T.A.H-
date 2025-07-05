@@ -1,10 +1,24 @@
 /**
- * B.E.L.T.A.H – index.js  (Tamax / Termux ready)
+ * B.E.L.T.A.H – index.js  (Tamax ⇄ TalkDrove dual‑mode)
  * Owner   : Ishaq Ibrahim
  * CoreDev : Raphton Muguna
  * Powered : Beltah × Knight
+ *
+ * Dual‑platform bootstrap:
+ *   PLATFORM=tamax      ➜  Runs interactively inside Termux / Tamax (prints QR & auto‑pair)
+ *   PLATFORM=talkdrove  ➜  Cloud‑safe mode for TalkDrove, Render, Railway, etc.
+ *                        (no interactive QR, expects pre‑saved session files)
+ *                        Set PLATFORM in your env vars on TalkDrove.
+ *
+ * Default PLATFORM is **tamax** for backward compatibility.
  */
 
+const PLATFORM = process.env.PLATFORM || 'tamax';
+const IS_TAMAX = PLATFORM === 'tamax';
+
+console.log(`[Beltah] Booting in ${PLATFORM.toUpperCase()} mode…`);
+
+/* ───────────────── DEPENDENCIES ───────────────── */
 const {
   default: makeWASocket,
   useMultiFileAuthState,
@@ -16,18 +30,20 @@ const P  = require('pino');
 const fs = require('fs');
 const path = require('path');
 
-const config        = require('./config');
-const menuCommand   = require('./commands/menuCommand');
-const autoViewStatus = require('./features/autoViewStatus');
-const antiDelete     = require('./features/antiDelete');
-const askChatGPT     = require('./chatgpt');               // real AI replies
+const config          = require('./config');
+const menuCommand     = require('./commands/menuCommand');
+const autoViewStatus  = require('./features/autoViewStatus');
+const antiDelete      = require('./features/antiDelete');
+const askChatGPT      = require('./chatgpt');              // real AI replies
 
+/* ───────────────── CONSTANTS ───────────────── */
 const SESSION_FOLDER      = './session';
-const LOG_LEVEL           = 'silent';
+const LOG_LEVEL           = IS_TAMAX ? 'info' : 'silent';
 const BROWSER_DESCRIPTION = [config.botName, 'Chrome', '3.0'];
 
 if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
+/* ───────────────── MAIN ───────────────── */
 (async () => {
   const { state, saveCreds } = await useMultiFileAuthState(SESSION_FOLDER);
   const { version }          = await fetchLatestBaileysVersion();
@@ -35,7 +51,7 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
   const sock = makeWASocket({
     version,
     logger: P({ level: LOG_LEVEL }),
-    printQRInTerminal: false,
+    printQRInTerminal: IS_TAMAX,      // prints QR only on Tamax/Termux
     auth: state,
     browser: BROWSER_DESCRIPTION,
     markOnlineOnConnect: true
@@ -56,17 +72,20 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
       if (willReconnect) return (await delay(2000), sock.ws.close());
     }
 
-    /* First-run pair-code flow */
-    if (connection === 'connecting'
-        && !sock.authState.creds.registered
-        && !global.__paired) {
+    /* First‑run pairing (only on Tamax) */
+    if (IS_TAMAX && connection === 'connecting' && !sock.authState.creds.registered && !global.__paired) {
       global.__paired = true;
       try {
         const pc = await sock.requestPairingCode(config.ownerNumber);
-        console.log(`📲 Pair-code: ${pc}\n🔗 WhatsApp ▸ Linked devices ▸ Enter code`);
+        console.log(`📲 Pair‑code: ${pc}\n🔗 WhatsApp ▸ Linked devices ▸ Enter code`);
       } catch (e) {
-        console.error('Pair-code error:', e.message);
+        console.error('Pair‑code error:', e.message);
       }
+    }
+
+    /* Cloud mode guidance */
+    if (!IS_TAMAX && connection === 'connecting' && !sock.authState.creds.registered) {
+      console.warn('[Beltah] No saved session found.\n  ➜ Run the bot locally with PLATFORM=tamax once to generate session files,\n  ➜ then commit / upload the session folder to TalkDrove.');
     }
   });
 
@@ -129,4 +148,5 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 /* helper */
 function delay(ms) {
   return new Promise((r) => setTimeout(r, ms));
-      }
+}
+
