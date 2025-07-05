@@ -150,8 +150,5 @@ MIT Licensed
 
 > “This bot isn’t just a tool — it’s a whole personality for your WhatsApp.”
 🧠 Welcome to Beltah – AI ya mtaa, with brains and flavor. 🇰🇪
-<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=35&duration=3500&pause=1500&color=008000&center=true&vCenter=true&width=1200&lines=🇰🇪+BELTAH+WhatsApp+Bot+is+Live!;💻+Built+by+Rafton+%26+Ishaq;🧠+Powered+by+ChatGPT+AI+Engine;" alt="Typing Animation" />
-</h1><p align="center"><strong>Maintainers of BeltahBot-MD</strong><br/>
-<i>A modern WhatsApp bot built with African creativity 🌍✨</i></p><p align="center">
   <img src="https://github.com/Toxicant1/B.E.L.T.A.H-/blob/main/beltah-banner.png?raw=true" width="100%" alt="BeltahBot Banner" />
 </p>
