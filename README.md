@@ -150,5 +150,3 @@ MIT Licensed
 
 > “This bot isn’t just a tool — it’s a whole personality for your WhatsApp.”
 🧠 Welcome to Beltah – AI ya mtaa, with brains and flavor. 🇰🇪
-  <img src="https://github.com/Toxicant1/B.E.L.T.A.H-/blob/main/beltah-banner.png?raw=true" width="100%" alt="BeltahBot Banner" />
-</p>
