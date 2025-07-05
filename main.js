@@ -1,4 +1,3 @@
-// main.js — BeltahBot-MD
 const {
   default: makeWASocket,
   useMultiFileAuthState,
@@ -9,16 +8,17 @@ const { Boom } = require('@hapi/boom');
 const P = require('pino');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
 
-// 🧠 AI Stack (Placeholder Imports)
-// const gminaeAI = require('./ai/gminae');
-// const crewDrewImage = require('./ai/crewdrew');
-// const chatGPT = require('./ai/chatgpt');
+// Load commands
+const menuCommand = require('./commands/menu');
+const chatCommand = require('./commands/chat'); // NEW: ChatGPT handler
+// Add other commands like playCommand, etc.
 
 async function startBeltahBot() {
   const { state, saveCreds } = await useMultiFileAuthState('./session');
-
   const { version } = await fetchLatestBaileysVersion();
+
   const Beltah = makeWASocket({
     version,
     logger: P({ level: 'silent' }),
@@ -43,7 +43,7 @@ async function startBeltahBot() {
     }
   });
 
-  // 👀 Auto View Status
+  // 👁️ Auto View Status
   Beltah.ev.on('messages.upsert', async (m) => {
     try {
       const msg = m.messages[0];
@@ -75,7 +75,7 @@ async function startBeltahBot() {
     }
   });
 
-  // 💬 Basic Command Handler
+  // 💬 Command Handler
   Beltah.ev.on('messages.upsert', async ({ messages }) => {
     const msg = messages[0];
     if (!msg.message || msg.key.fromMe) return;
@@ -87,26 +87,25 @@ async function startBeltahBot() {
       msg.message.imageMessage?.caption ||
       '';
 
-    const sender = msg.key.participant || msg.key.remoteJid;
     const command = text.trim().toLowerCase();
 
-    // Typing indicator before replying
+    // Typing effect
     await Beltah.sendPresenceUpdate('composing', from);
 
-    if (command === 'ping') {
-      await Beltah.sendMessage(from, { text: '🏓 Pong! BeltahBot is online 😎' });
+    // Menu
+    if (command === '.menu') {
+      await menuCommand(Beltah, msg);
     }
 
-    // AI command placeholder
-    else if (command.startsWith('ask ') || command.startsWith('beltah ')) {
-      const query = command.replace(/^ask |^beltah /i, '');
-      await Beltah.sendMessage(from, {
-        text: `🤖 ChatGPT replying... (placeholder)\nYour message: "${query}"`
-      });
+    // ChatGPT AI
+    else if (command.startsWith('.chat ')) {
+      await chatCommand(Beltah, msg, command.replace('.chat ', '').trim());
+    }
 
-      // Example:
-      // const reply = await chatGPT(query);
-      // await Beltah.sendMessage(from, { text: reply });
+    // Future: Add .play, .truth, etc.
+
+    else {
+      console.log(`📩 Unrecognized command from ${from}:`, command);
     }
   });
 }
