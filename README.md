@@ -1,154 +1,56 @@
-<h1 align="center">
-  🤖 <strong>B.E.L.T.A.H – WhatsApp Bot</strong> 🇰🇪  
-</h1><p align="center">
-  <em>Built by <strong>Ishaq Ibrahim</strong> and <strong>Raphton Muguna</strong> – powered by ChatGPT AI, CrewDrew & Gminae.</em>
-</p><p align="center">
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&duration=4000&pause=1000&color=00C851&center=true&vCenter=true&width=900&lines=B.E.L.T.A.H+WhatsApp+Bot+🇰🇪" alt="Typing Animation" />
+</p>
+
+<p align="center">
+  <img src="https://cooltext.com/images/animated-glow-green.gif" alt="Powered by Rafton & Ishaq" title="Powered by Rafton & Ishaq" />
+</p>
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&pause=1000&color=FF6C00&center=true&vCenter=true&width=800&lines=Main+Brain:+ChatGPT+🤖" alt="AI Brain" />
+</p>
+
+---
+
+<p align="center">
   <img src="https://github.com/Toxicant1/B.E.L.T.A.H-/blob/main/beltah-banner.png?raw=true" width="100%" alt="BeltahBot Banner" />
 </p>
+
 ---
 
-💡 What is B.E.L.T.A.H?
+### ✨ <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&pause=1000&color=00BFFF&width=435&lines=💡+What+is+B.E.L.T.A.H%3F" alt="Typing header"/>
 
-B.E.L.T.A.H si bot ya kawaida 😎
-Ni bot ya mtaa — iko na roho, iko na akili, iko na vibe.
+**B.E.L.T.A.H** si bot ya kawaida 😎  
+Ni bot ya mtaa — iko na roho, iko na akili, iko na vibe.  
 Fully offline, emoji-powered, and AI-driven!
 
-📱 No PC needed – install it directly on Android
-
-💬 ChatGPT-Powered – smart replies in Hinglish, Kiswahili, Sheng'
-
-🔒 Ready for your number or public use – up to you!
-
-
+- 📱 **No PC needed** – install it directly on Android  
+- 💬 **ChatGPT-Powered** – smart replies in Hinglish, Kiswahili, Sheng'  
+- 🔓 **Ready for public use or private lock**
 
 ---
 
-🔥 Key Features
+### 🚀 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&pause=1000&color=F7AA00&width=435&lines=🔥+Key+Features" alt="Typing header"/>
 
-🧠 AI Chat Modes: .chat, .romantic, .swahili
-
-🎵 Music Tools: .play, .yta, .ytv, .lyrics, .shazam
-
-🎨 Media: Stickers, ATTP, Image menus
-
-👑 Admin Tools: Kick, Mute, Anti-Delete, Auto View Status
-
-🌐 Deploy on Cloud or Android
-
-🆓 Free to Use & Customize
-
-
+- 🧠 **AI Chat Modes**: `.chat`, `.romantic`, `.swahili`  
+- 🎵 **Music Tools**: `.play`, `.yta`, `.ytv`, `.lyrics`, `.shazam`  
+- 🎨 **Media**: Stickers, ATTP, Image menus  
+- 👑 **Admin Tools**: Kick, Mute, Anti-Delete, Auto View Status  
+- 🌐 **Deploy on Cloud or Android**  
+- 🆓 **Free to Use & Customize**
 
 ---
 
-📲 Installation Options
+### 📲 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&pause=1000&color=3DF700&width=500&lines=📲+Install+Options" alt="Typing header"/>
 
-✅ Option 1: Install via Termux / Tamax (Offline, Android)
+#### ✅ Option 1: Install via Termux / Tamax (Offline, Android)
 
-1. Download Termux or Tamax
+1. Download **[Termux](https://f-droid.org/en/packages/com.termux/)** or **Tamax**  
+2. Run this:
 
-
-2. Open terminal and run:
-
-
-
+```bash
 pkg install nodejs git -y
 git clone https://github.com/Toxicant1/B.E.L.T.A.H-
 cd B.E.L.T.A.H-
 npm install
 node index.js
-
-3. Scan the WhatsApp code and Beltah will go live 🟢
-
-
-
-
----
-
-☁️ Option 2: Deploy via TalkDrove (Online Hosting)
-
-1. Go to TalkDrove and create an account
-
-
-2. Upload your bot folder
-
-
-3. Make sure to run npm install
-
-
-4. Then start it using node index.js
-
-
-
-
----
-
-📺 Deployment Video Tutorials
-
-Need help? Watch these step-by-step videos:
-
-🔧 Termux / Tamax Method
-🎬 How to Deploy a WhatsApp Bot using Termux – Full Guide
-
-☁️ TalkDrove Method
-🎬 Deploy WhatsApp Bot Gifted-Md on TalkDrove
-
-
-No confusion, just follow the video and you're good to go!
-
-
----
-
-👥 Team Behind Beltah
-
-Role	Name
-
-🧠 Main Dev	Ishaq Ibrahim (Beltah)
-🤝 Co-Dev	Raphton Muguna
-
-
-📞 WhatsApp Contacts:
-
-+254741819582 – Ishaq
-
-+254743689554 – Raphton
-
-
-📧 Emails:
-
-ishaq78ibrahim@gmail.com
-
-isaac0maina@gmail.com
-
-raphtonmuguna@gmail.com
-
-
-📸 Instagram:
-
-@toxic._.a.n.t – Ishaq
-
-@raph.muguna – Raphton
-
-
-
----
-
-🛡️ License & Credits
-
-MIT Licensed
-
-💻 Built with 💚 by Ishaq & Raphton
-
-🇰🇪 Made in Kenya, 2025
-
-
-> 🧠 “Hii si bot ya kawaida – iko na akili, iko na roho, iko na style.”
-✨ BeltahBot is for the culture – enjoy the mtaa vibes with every reply!
-
-
-
-
----
-
-Let me know if you want this in .md format or want to preview how it looks on GitHub. ✅
-
