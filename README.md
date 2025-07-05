@@ -30,7 +30,7 @@
 - 🎨 **Media** – Stickers, ATTP, image-based menu
 - 🛡️ **Admin Tools** – Kick, Mute, Anti-Delete, Auto View Status
 - 🤖 **AI Stack** – Gminae → CrewDrew → ChatGPT
-- 🔐 **Locked to Owner** – +254741819582  
+- 👑 Original Creator: Ishaq Ibrahim – wa.me/254741819582  
 - 📴 **Offline & Online Modes** – No PC needed!
 
 ---
