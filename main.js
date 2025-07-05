@@ -4,16 +4,17 @@ const {
   DisconnectReason,
   fetchLatestBaileysVersion
 } = require('@whiskeysockets/baileys');
+
 const { Boom } = require('@hapi/boom');
 const P = require('pino');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
-// Load commands
+// ⬇️ Load custom commands
 const menuCommand = require('./commands/menu');
-const chatCommand = require('./commands/chat'); // NEW: ChatGPT handler
-// Add other commands like playCommand, etc.
+const chatCommand = require('./commands/chat');
+// Add other commands here as needed (e.g., playCommand)
 
 async function startBeltahBot() {
   const { state, saveCreds } = await useMultiFileAuthState('./session');
@@ -30,7 +31,7 @@ async function startBeltahBot() {
 
   Beltah.ev.on('creds.update', saveCreds);
 
-  // 🔁 Auto-reconnect
+  // 🔁 Auto-reconnect if disconnected (unless logged out)
   Beltah.ev.on('connection.update', (update) => {
     const { connection, lastDisconnect } = update;
     if (connection === 'close') {
@@ -43,7 +44,7 @@ async function startBeltahBot() {
     }
   });
 
-  // 👁️ Auto View Status
+  // 👁️ Auto view WhatsApp statuses
   Beltah.ev.on('messages.upsert', async (m) => {
     try {
       const msg = m.messages[0];
@@ -55,7 +56,7 @@ async function startBeltahBot() {
     }
   });
 
-  // 🛡️ Anti-delete — restore deleted messages
+  // 🛡️ Anti-delete: Restore deleted messages in real time
   Beltah.ev.on('messages.update', async (updates) => {
     for (const update of updates) {
       if (update.messageStubType === 1 && update.key?.remoteJid !== 'status@broadcast') {
@@ -75,7 +76,7 @@ async function startBeltahBot() {
     }
   });
 
-  // 💬 Command Handler
+  // 💬 Command handler
   Beltah.ev.on('messages.upsert', async ({ messages }) => {
     const msg = messages[0];
     if (!msg.message || msg.key.fromMe) return;
@@ -89,20 +90,21 @@ async function startBeltahBot() {
 
     const command = text.trim().toLowerCase();
 
-    // Typing effect
+    // ✍️ Show typing indicator
     await Beltah.sendPresenceUpdate('composing', from);
 
-    // Menu
+    // 🧾 Menu command
     if (command === '.menu') {
       await menuCommand(Beltah, msg);
     }
 
-    // ChatGPT AI
+    // 🤖 AI chat command
     else if (command.startsWith('.chat ')) {
-      await chatCommand(Beltah, msg, command.replace('.chat ', '').trim());
+      const query = command.replace('.chat ', '').trim();
+      await chatCommand(Beltah, msg, query);
     }
 
-    // Future: Add .play, .truth, etc.
+    // 🔜 Add more commands here (e.g., .play, .truth, etc.)
 
     else {
       console.log(`📩 Unrecognized command from ${from}:`, command);
@@ -110,4 +112,5 @@ async function startBeltahBot() {
   });
 }
 
+// 🚀 Start the bot
 module.exports = { startBeltahBot };
