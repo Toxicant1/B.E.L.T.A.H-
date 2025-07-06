@@ -1,11 +1,11 @@
-/**
- * B.E.L.T.A.H – index.js  (QR-first, Render-ready)
+/*
+ * B.E.L.T.A.H – index.js (Render ⇄ Tamax Dual Mode, using Pair-Code)
  * Owner   : Ishaq Ibrahim
  * CoreDev : Raphton Muguna
  * Powered : Beltah × Knight
  */
 
-const PLATFORM  = process.env.PLATFORM || 'tamax';   // tamax | render
+const PLATFORM  = process.env.PLATFORM || 'render'; // 'tamax' or 'render'
 const IS_TAMAX  = PLATFORM === 'tamax';
 
 console.log(`[Beltah] Booting in ${PLATFORM.toUpperCase()} mode…`);
@@ -17,13 +17,15 @@ const {
   fetchLatestBaileysVersion
 } = require('@whiskeysockets/baileys');
 
-const P   = require('pino');
-const fs  = require('fs');
+const fs   = require('fs');
+const path = require('path');
+const P    = require('pino');
+
 const config          = require('./config');
-const menuCommand     = require('./commands/menu.js');   // ✅ correct file
+const menuCommand     = require('./commands/menu');
 const autoViewStatus  = require('./features/autoViewStatus');
 const antiDelete      = require('./features/antiDelete');
-const askChatGPT      = require('./chatgpt');
+const askChatGPT      = require('./chatgpt'); // AI Chat Support
 
 const SESSION_FOLDER      = './session';
 const LOG_LEVEL           = IS_TAMAX ? 'info' : 'silent';
@@ -38,7 +40,7 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
   const sock = makeWASocket({
     version,
     logger: P({ level: LOG_LEVEL }),
-    printQRInTerminal: true,        // ✅ QR visible in Tamax *and* Render logs
+    printQRInTerminal: false, // disable deprecated QR
     auth: state,
     browser: BROWSER_DESCRIPTION,
     markOnlineOnConnect: true
@@ -46,28 +48,35 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
   sock.ev.on('creds.update', saveCreds);
 
-  /* ─── Connection events ─── */
+  /* ───── CONNECTION HANDLER ───── */
   sock.ev.on('connection.update', async ({ connection, lastDisconnect }) => {
     const code = lastDisconnect?.error?.output?.statusCode;
 
-    if (connection === 'connecting') console.log('⏳ Connecting…');
-    if (connection === 'open')      console.log('✅ BeltahBot ONLINE!');
+    if (connection === 'connecting') console.log('⏳ Connecting...');
+    if (connection === 'open') console.log('✅ BeltahBot ONLINE and ready!');
 
     if (connection === 'close') {
       const willReconnect = code !== DisconnectReason.loggedOut;
-      console.log(`❌ Connection closed (${code}). Reconnect: ${willReconnect}`);
+      console.log(`❌ Disconnected (${code}). Will reconnect: ${willReconnect}`);
       if (willReconnect) return (await delay(2000), sock.ws.close());
     }
 
-    if (IS_TAMAX && connection === 'open')
-      console.log('📁 Session saved → ./session/  (upload this to Render for cloud login)');
+    if (!sock.authState.creds.registered && !global.__paired) {
+      global.__paired = true;
+      try {
+        const pairCode = await sock.requestPairingCode(config.ownerNumber);
+        console.log(`📲 Pair-code: ${pairCode}\n🔗 WhatsApp ▸ Linked Devices ▸ Enter Code`);
+      } catch (err) {
+        console.error('❌ Pairing failed:', err.message);
+      }
+    }
   });
 
-  /* ─── Feature handlers ─── */
+  /* ───── FEATURES ───── */
   sock.ev.on('messages.upsert', (msg) => autoViewStatus(sock, msg));
   sock.ev.on('messages.update', (upd) => antiDelete(sock, upd));
 
-  /* ─── Command handler ─── */
+  /* ───── COMMAND HANDLER ───── */
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0];
     if (!m || m.key.fromMe || m.key.remoteJid === 'status@broadcast') return;
@@ -83,34 +92,40 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
     const body = txt.trim();
 
-    // 🎙 show “recording audio” status
-    if (config.typingIndicator) await sock.sendPresenceUpdate('recording', from);
+    // 👇 Recording indicator instead of typing
+    await sock.sendPresenceUpdate('recording', from);
 
-    /* basic commands */
+    // 🔹 Basic command: .ping
     if (/^ping$/i.test(body))
       return sock.sendMessage(from, { text: '🏓 Pong! Beltah iko live 😎' }, { quoted: m });
 
+    // 🔹 Menu command
     if (/^(\.menu|\.help|\.alive)$/i.test(body))
       return menuCommand(sock, m);
 
-    /* AI chat */
+    // 🔹 AI chat commands
     if (/^(\.?(ask|beltah|chat)\s+)/i.test(body)) {
       const prompt = body.replace(/^(\.?(ask|beltah|chat)\s+)/i, '').trim();
       const reply  = await askChatGPT(prompt);
       return sock.sendMessage(from, { text: reply }, { quoted: m });
     }
 
-    /* owner-only */
+    // 🔹 Owner-only restart
     if (/^\.restart$/i.test(body)) {
-      if (!isBoss)
-        return sock.sendMessage(from, { text: '🚫 Owner-only command.' }, { quoted: m });
+      if (!isBoss) return sock.sendMessage(from, { text: '🚫 Owner-only command.' }, { quoted: m });
       await sock.sendMessage(from, { text: '♻️ Restarting Beltah…' }, { quoted: m });
       return process.exit(0);
+    }
+
+    // 🔹 Admin command placeholder
+    if (/^(\.kick|\.mute|\.unmute)/i.test(body)) {
+      if (!isBoss) return sock.sendMessage(from, { text: '🚫 Admin-only command.' }, { quoted: m });
+      return sock.sendMessage(from, { text: '🛠 Admin tools coming soon…' }, { quoted: m });
     }
   });
 })();
 
-/* helper */
+/* 🔁 Delay Helper */
 function delay(ms) {
-  return new Promise((r) => setTimeout(r, ms));
-}
+  return new Promise((res) => setTimeout(res, ms));
+    }
