@@ -1,5 +1,5 @@
 /**
- * B.E.L.T.A.H – index.js  (Tamax ⇄ Cloud dual-mode, now using Pair Code everywhere)
+ * B.E.L.T.A.H – index.js  (Tamax ⇄ Cloud dual-mode with Pair Code + Recording Presence)
  * Owner   : Ishaq Ibrahim
  * CoreDev : Raphton Muguna
  * Powered : Beltah × Knight
@@ -20,7 +20,7 @@ const {
 const P   = require('pino');
 const fs  = require('fs');
 const config          = require('./config');
-const menuCommand     = require('./commands/menuCommand');
+const menuCommand     = require('./commands/menu');
 const autoViewStatus  = require('./features/autoViewStatus');
 const antiDelete      = require('./features/antiDelete');
 const askChatGPT      = require('./chatgpt');
@@ -33,12 +33,12 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
 (async () => {
   const { state, saveCreds } = await useMultiFileAuthState(SESSION_FOLDER);
-  const { version }          = await fetchLatestBaileysVersion();
+  const { version } = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
     version,
     logger: P({ level: LOG_LEVEL }),
-    printQRInTerminal: false,   // QR disabled – we rely on pair-code
+    printQRInTerminal: false, // Pair Code only
     auth: state,
     browser: BROWSER_DESCRIPTION,
     markOnlineOnConnect: true
@@ -46,12 +46,12 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
   sock.ev.on('creds.update', saveCreds);
 
-  /* ─── Connection events ─── */
+  /* ── Connection Events ── */
   sock.ev.on('connection.update', async ({ connection, lastDisconnect }) => {
     const code = lastDisconnect?.error?.output?.statusCode;
 
     if (connection === 'connecting') console.log('⏳ Connecting…');
-    if (connection === 'open')      console.log('✅ BeltahBot ONLINE!');
+    if (connection === 'open') console.log('✅ BeltahBot ONLINE!');
 
     if (connection === 'close') {
       const willReconnect = code !== DisconnectReason.loggedOut;
@@ -59,30 +59,30 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
       if (willReconnect) return (await delay(2000), sock.ws.close());
     }
 
-    /* First-run pair-code flow (now works everywhere) */
+    // 🔐 Pair Code (used everywhere)
     if (connection === 'connecting'
-        && !sock.authState.creds.registered
-        && !global.__paired) {
+      && !sock.authState.creds.registered
+      && !global.__paired) {
       global.__paired = true;
       try {
         const pc = await sock.requestPairingCode(config.ownerNumber);
-        console.log(`📲 Pair-code: ${pc}\n🔗 WhatsApp ▸ Linked devices ▸ Enter code`);
-      } catch (e) {
-        console.error('Pair-code error:', e.message);
+        console.log(`📲 Pair-code: ${pc}\n🔗 WhatsApp ▸ Linked Devices ▸ Enter Code`);
+      } catch (err) {
+        console.error('Pair-code error:', err.message);
       }
     }
   });
 
-  /* ─── Feature handlers ─── */
-  sock.ev.on('messages.upsert', (msg)    => autoViewStatus(sock, msg));
-  sock.ev.on('messages.update', (upd)    => antiDelete(sock, upd));
+  /* ── Features ── */
+  sock.ev.on('messages.upsert', (m) => autoViewStatus(sock, m));
+  sock.ev.on('messages.update', (m) => antiDelete(sock, m));
 
-  /* ─── Command handler ─── */
+  /* ── Command Handler ── */
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0];
     if (!m || m.key.fromMe || m.key.remoteJid === 'status@broadcast') return;
 
-    const from   = m.key.remoteJid;
+    const from = m.key.remoteJid;
     const sender = (m.key.participant || m.key.remoteJid).split('@')[0];
     const isBoss = [config.ownerNumber, config.coreDevNumber].includes(sender);
 
@@ -93,8 +93,10 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
     const body = txt.trim();
 
-    if (config.typingIndicator) await sock.sendPresenceUpdate('composing', from);
+    // 🎙 Send "recording audio" status
+    if (config.typingIndicator) await sock.sendPresenceUpdate('recording', from);
 
+    // 🔧 Commands
     if (/^ping$/i.test(body))
       return sock.sendMessage(from, { text: '🏓 Pong! Beltah iko live 😎' }, { quoted: m });
 
@@ -103,22 +105,20 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
     if (/^(\.?(ask|beltah|chat)\s+)/i.test(body)) {
       const prompt = body.replace(/^(\.?(ask|beltah|chat)\s+)/i, '').trim();
-      const reply  = await askChatGPT(prompt);
+      const reply = await askChatGPT(prompt);
       return sock.sendMessage(from, { text: reply }, { quoted: m });
     }
 
+    // 🔒 Admin-only
     if (/^\.restart$/i.test(body)) {
-      if (!isBoss)
-        return sock.sendMessage(from, { text: '🚫 Owner-only command.' }, { quoted: m });
-
+      if (!isBoss) return sock.sendMessage(from, { text: '🚫 Owner-only command.' }, { quoted: m });
       await sock.sendMessage(from, { text: '♻️ Restarting Beltah…' }, { quoted: m });
-      return process.exit(0);   // pm2 / nodemon will revive
+      return process.exit(0);
     }
 
     if (/^(\.kick|\.mute|\.unmute)/i.test(body)) {
       if (!isBoss)
         return sock.sendMessage(from, { text: '🚫 Owner-only command.' }, { quoted: m });
-
       return sock.sendMessage(from, { text: '🔧 Admin command placeholder.' }, { quoted: m });
     }
   });
@@ -126,5 +126,5 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
 /* helper */
 function delay(ms) {
-  return new Promise((r) => setTimeout(r, ms));
-      }
+  return new Promise((res) => setTimeout(res, ms));
+             }
