@@ -1,30 +1,26 @@
+// chatgpt.js
 const axios = require('axios');
 
-// Direct API key embedded temporarily (replace later with .env or Render variable)
-const OPENAI_API_KEY = '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';
+// Pull API key securely from environment variables
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-const askChatGPT = async (prompt) => {
+async function askChatGPT(prompt) {
   try {
-    const res = await axios.post(
-      'https://api.openai.com/v1/chat/completions',
-      {
-        model: 'gpt-3.5-turbo',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.7
+    const res = await axios.post('https://api.openai.com/v1/chat/completions', {
+      model: 'gpt-3.5-turbo',  // or change to 'gpt-4' if needed
+      messages: [{ role: 'user', content: prompt }],
+    }, {
+      headers: {
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
       },
-      {
-        headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+    });
 
     return res.data.choices[0].message.content.trim();
   } catch (err) {
-    console.error('🧠 ChatGPT Error:', err.response?.data || err.message);
-    return '⚠️ Beltah AI failed to respond, bro. Jaribu tena baadaye.';
+    console.error('❌ ChatGPT error:', err.response?.data || err.message);
+    return '😕 ChatGPT failed to respond. Check API key or try again later.';
   }
-};
+}
 
 module.exports = askChatGPT;
