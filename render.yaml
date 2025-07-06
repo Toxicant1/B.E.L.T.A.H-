@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: beltahbot
+    env: node
+    buildCommand: npm install
+    startCommand: node index.js
+    plan: free
+    branch: main
+    autoDeploy: true
