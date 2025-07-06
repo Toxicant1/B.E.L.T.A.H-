@@ -1,5 +1,5 @@
 /**
- * B.E.L.T.A.H – index.js (QR first → Render cloud ready)
+ * B.E.L.T.A.H – index.js  (QR-first, Render-ready)
  * Owner   : Ishaq Ibrahim
  * CoreDev : Raphton Muguna
  * Powered : Beltah × Knight
@@ -20,7 +20,7 @@ const {
 const P   = require('pino');
 const fs  = require('fs');
 const config          = require('./config');
-const menuCommand     = require('./commands/menuCommand');
+const menuCommand     = require('./commands/menu.js');   // ✅ correct file
 const autoViewStatus  = require('./features/autoViewStatus');
 const antiDelete      = require('./features/antiDelete');
 const askChatGPT      = require('./chatgpt');
@@ -38,7 +38,7 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
   const sock = makeWASocket({
     version,
     logger: P({ level: LOG_LEVEL }),
-    printQRInTerminal: IS_TAMAX,      // QR for local only
+    printQRInTerminal: true,        // ✅ QR visible in Tamax *and* Render logs
     auth: state,
     browser: BROWSER_DESCRIPTION,
     markOnlineOnConnect: true
@@ -46,7 +46,7 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
   sock.ev.on('creds.update', saveCreds);
 
-  /* ─── Connection Events ─── */
+  /* ─── Connection events ─── */
   sock.ev.on('connection.update', async ({ connection, lastDisconnect }) => {
     const code = lastDisconnect?.error?.output?.statusCode;
 
@@ -59,17 +59,15 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
       if (willReconnect) return (await delay(2000), sock.ws.close());
     }
 
-    if (IS_TAMAX && connection === 'open') {
-      console.log('📁 Session saved to: ./session/');
-      console.log('📦 You can now upload it to Render to go cloud!');
-    }
+    if (IS_TAMAX && connection === 'open')
+      console.log('📁 Session saved → ./session/  (upload this to Render for cloud login)');
   });
 
-  /* ─── Feature Handlers ─── */
-  sock.ev.on('messages.upsert', (msg)    => autoViewStatus(sock, msg));
-  sock.ev.on('messages.update', (upd)    => antiDelete(sock, upd));
+  /* ─── Feature handlers ─── */
+  sock.ev.on('messages.upsert', (msg) => autoViewStatus(sock, msg));
+  sock.ev.on('messages.update', (upd) => antiDelete(sock, upd));
 
-  /* ─── Command Handler ─── */
+  /* ─── Command handler ─── */
   sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0];
     if (!m || m.key.fromMe || m.key.remoteJid === 'status@broadcast') return;
@@ -85,38 +83,34 @@ if (!fs.existsSync(SESSION_FOLDER)) fs.mkdirSync(SESSION_FOLDER);
 
     const body = txt.trim();
 
-    if (config.typingIndicator) await sock.sendPresenceUpdate('recording', from); // 🔄 changed to "recording"
+    // 🎙 show “recording audio” status
+    if (config.typingIndicator) await sock.sendPresenceUpdate('recording', from);
 
+    /* basic commands */
     if (/^ping$/i.test(body))
       return sock.sendMessage(from, { text: '🏓 Pong! Beltah iko live 😎' }, { quoted: m });
 
     if (/^(\.menu|\.help|\.alive)$/i.test(body))
       return menuCommand(sock, m);
 
+    /* AI chat */
     if (/^(\.?(ask|beltah|chat)\s+)/i.test(body)) {
       const prompt = body.replace(/^(\.?(ask|beltah|chat)\s+)/i, '').trim();
       const reply  = await askChatGPT(prompt);
       return sock.sendMessage(from, { text: reply }, { quoted: m });
     }
 
+    /* owner-only */
     if (/^\.restart$/i.test(body)) {
       if (!isBoss)
         return sock.sendMessage(from, { text: '🚫 Owner-only command.' }, { quoted: m });
-
       await sock.sendMessage(from, { text: '♻️ Restarting Beltah…' }, { quoted: m });
       return process.exit(0);
-    }
-
-    if (/^(\.kick|\.mute|\.unmute)/i.test(body)) {
-      if (!isBoss)
-        return sock.sendMessage(from, { text: '🚫 Owner-only command.' }, { quoted: m });
-
-      return sock.sendMessage(from, { text: '🔧 Admin command placeholder.' }, { quoted: m });
     }
   });
 })();
 
-/* Delay helper */
+/* helper */
 function delay(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
