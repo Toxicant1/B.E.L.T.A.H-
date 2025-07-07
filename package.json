@@ -1,36 +1,40 @@
 {
-  "name": "beltahbot-md",
+  "name": "beltah-pairui",
   "version": "1.0.0",
-  "description": "🔥 BeltahBot-MD - WhatsApp AI Bot powered by Beltah × Knight, optimized for Termux",
-  "main": "index.js",
+  "description": "Web UI that generates WhatsApp pairing codes (or QR) for BeltahBot.",
+  "main": "server.js",
+
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "tarmac": "node index.js"
+    "start": "node server.js",          // Render uses this
+    "dev":   "nodemon server.js"        // Optional: local hot-reload
   },
-  "keywords": [
-    "whatsapp-bot",
-    "beltah",
-    "termux",
-    "termux-bot",
-    "chatgpt",
-    "ai",
-    "baileys",
-    "mp3-bot",
-    "gpt-bot"
-  ],
-  "author": "Ishaq Ibrahim",
-  "license": "MIT",
+
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.6.0",
-    "axios": "^1.7.2",
-    "chalk": "^5.3.0",
-    "figlet": "^1.5.2",
-    "fs-extra": "^11.1.1",
-    "moment": "^2.29.4",
-    "pino": "^8.0.0"
+    "@whiskeysockets/baileys": "^6.7.18",
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "pino": "^8.0.0",
+    "qrcode-terminal": "^0.12.0"        // shows ASCII QR in terminal fallback
   },
-  "engines": {
+
+  "devDependencies": {
+    "nodemon": "^3.0.2"                 // only for local development
+  },
+
+  "keywords": [
+    "whatsapp",
+    "pair-code",
+    "qr",
+    "beltah",
+    "baileys",
+    "render"
+  ],
+
+  "author": "Ishaq Ibrahim (Beltah) & Raphton Muguna",
+  "license": "MIT",
+
+  "engines": {                          // helps Render pick a good Node version
     "node": ">=18.x"
   }
-}
+    }
